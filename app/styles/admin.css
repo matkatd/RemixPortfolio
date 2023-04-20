@@ -1,0 +1,55 @@
+:root {
+  --admin-color: white;
+  --login-background: rgb(207, 236, 248);
+  --main-blue: #3083dc;
+  --nav-color: #f7cb5c;
+}
+
+body {
+  background: var(--admin-color);
+}
+
+main {
+  display: grid;
+  place-content: center;
+}
+
+.login {
+  width: 20vw;
+  background: var(--login-background);
+  border-radius: 10px;
+  padding: 2rem 3rem;
+  font-family: lato;
+}
+
+.text-input {
+  width: 100%;
+  border: none;
+  border-radius: 7px;
+  height: 1.5rem;
+  margin: 7px 0;
+  font-family: lato;
+  font-size: 0.75rem;
+}
+
+.login-button {
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: var(--main-blue);
+  border-radius: 7px;
+  margin: 10px 0;
+  font-family: lato-bold;
+  color: white;
+  font-size: 0.75rem;
+}
+
+.change-button {
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: var(--nav-color);
+  border-radius: 7px;
+  margin: 10px 0;
+  font-family: lato-bold;
+  color: black;
+  font-size: 0.75rem;
+}
