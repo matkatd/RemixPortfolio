@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  // binaryTargets = ["native", "darwin-arm64"]
 }
 
 datasource db {
@@ -19,7 +20,7 @@ model User {
   profile   Profile
 }
 
-model Project {
+model Projects {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   category String
   title    String
@@ -30,7 +31,7 @@ model Project {
   writeup  String[]
 }
 
-model Image {
+model Photography {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   alt   String

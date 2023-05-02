@@ -1,16 +1,13 @@
 import ProjectCard from "./ProjectCard";
 
-function CardList({ projects }, category) {
-    return (
-        <main>
-            <h2 className="grid-page img-page">{category}</h2>
-            <div id="card-grid">
-                {projects.map((project) => (
-                    <ProjectCard project={project} key={project.slug}/>
-                ))}
-            </div>
-        </main>
-    );
+function CardList({ data }) {
+  return (
+    <div id="card-grid">
+      {data?.map((project) => (
+        <ProjectCard project={project} key={project?.slug} />
+      ))}
+    </div>
+  );
 }
 
 export default CardList;

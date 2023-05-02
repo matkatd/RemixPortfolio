@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link, NavLink } from "@remix-run/react";
 import logo from "../../res/logo.png";
 
 function handleClick() {
@@ -9,23 +9,27 @@ function handleClick() {
 function NavBar() {
   return (
     <nav>
-      <img src={logo} alt="Logo" className="logo" />
+      <Link to={"/"}>
+        <img src={logo} alt="Logo" className="logo" />
+      </Link>
       <div className="big-menu">
         <ul className="nav-links">
           <li>
-            <Link href="./pages/wdd.html">Web Design/Development</Link>
+            <NavLink to={"/projects?category=wdd"}>
+              Web Design/Development
+            </NavLink>
           </li>
           <li>
-            <Link href="./pages/se.html">Software Engineering</Link>
+            <NavLink to={"/wdd"}>Software Engineering</NavLink>
           </li>
           <li>
-            <Link href="./pages/photo.html">Photography</Link>
+            <NavLink to={"/wdd"}>Photography</NavLink>
           </li>
           <li>
-            <Link href="./pages/other.html">Other</Link>
+            <NavLink to={"/wdd"}>Other</NavLink>
           </li>
           <li>
-            <Link href="./pages/contact.html">Contact</Link>
+            <NavLink to={"/wdd"}>Contact</NavLink>
           </li>
         </ul>
       </div>
@@ -38,19 +42,19 @@ function NavBar() {
             &times;
           </div>
           <li>
-            <Link href="./pages/wdd.html">Web Design/Development</Link>
+            <NavLink to="/wdd">Web Design/Development</NavLink>
           </li>
           <li>
-            <Link href="./pages/se.html">Software Engineering</Link>
+            <NavLink to="/wdd">Software Engineering</NavLink>
           </li>
           <li>
-            <Link href="./pages/photo.html">Photography</Link>
+            <NavLink to="/wdd">Photography</NavLink>
           </li>
           <li>
-            <Link href="./pages/other.html">Other</Link>
+            <NavLink to="/wdd">Other</NavLink>
           </li>
           <li>
-            <Link href="./pages/contact.html">Contact</Link>
+            <NavLink to="/wdd">Contact</NavLink>
           </li>
         </ul>
       </div>
