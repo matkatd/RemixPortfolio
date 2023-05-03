@@ -3,11 +3,11 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import { getProjects } from "../utils/projects.server";
+import { getProjects } from "../utils/db.server";
 
 import { json, redirect } from "@remix-run/node";
 // import { getRequiredParam, notFound } from "../../utils/http.server";
-import CardList from "./components/cardlist";
+import CardList from "~/routes/components/CardList";
 import styles from "~/styles/projects.css";
 
 export async function loader({ request, params }) {

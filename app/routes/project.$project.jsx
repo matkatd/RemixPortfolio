@@ -1,6 +1,5 @@
 import { json } from "@remix-run/node";
-import { getRequiredParam } from "../utils/http.server";
-import { getProject } from "../utils/projects.server";
+import { getProject } from "../utils/db.server";
 import {
   isRouteErrorResponse,
   useLoaderData,

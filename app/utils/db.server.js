@@ -15,3 +15,7 @@ export async function getProject(slug) {
     },
   });
 }
+
+export async function getPhotos() {
+  return prisma.photography.findMany();
+}

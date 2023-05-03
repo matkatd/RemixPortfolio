@@ -8,8 +8,8 @@ import {
 } from "@remix-run/react";
 
 import mainStyles from "~/styles/main.css";
-import NavBar from "./routes/components/NavBar";
-import { Footer } from "./routes/components/Footer";
+import NavBar from "~/routes/components/NavBar";
+import { Footer } from "~/routes/components/Footer";
 
 export const meta = () => [
   {

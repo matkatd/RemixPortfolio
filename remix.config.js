@@ -12,4 +12,9 @@ module.exports = {
     v2_routeConvention: true,
     serverModuleFormat: "cjs",
   },
+  serverDependenciesToBundle: [
+    "yet-another-react-lightbox",
+    "yet-another-react-lightbox/plugins/zoom",
+    "yet-another-react-lightbox/plugins/thumbnails",
+  ],
 };

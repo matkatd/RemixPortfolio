@@ -195,6 +195,11 @@ h2.grid-page {
 h2.img-page {
   color: #1b1c1e;
 }
+
+main.img-page {
+  padding: 10px;
+}
+
 #card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -240,7 +245,7 @@ h2.img-page {
 }
 
 .card-button:hover {
-  background-color: #386da6;
+  background-color: #09427e;
   transition: ease background-color 0.5s;
 }
 
@@ -287,7 +292,7 @@ h2.img-page {
   width: auto;
 }
 
-.venobox img {
+.gallery-thumb {
   border-radius: 10px;
 }
 
