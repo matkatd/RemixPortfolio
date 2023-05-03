@@ -36,7 +36,6 @@ function badRequest(message) {
 }
 
 export function getRequiredParam(params, key) {
-  console.log(params);
   const value = params[key];
 
   if (!value) {

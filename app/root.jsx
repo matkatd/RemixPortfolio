@@ -7,14 +7,17 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import mainStyles from '~/styles/main.css';
+import mainStyles from "~/styles/main.css";
 import NavBar from "./routes/components/NavBar";
+import { Footer } from "./routes/components/Footer";
 
-export const meta = () => ([{
-  charset: "utf-8",
-  title: "David's Portfolio",
-  viewport: "width=device-width,initial-scale=1",
-}]);
+export const meta = () => [
+  {
+    charset: "utf-8",
+    title: "David's Portfolio",
+    viewport: "width=device-width,initial-scale=1",
+  },
+];
 
 export default function App() {
   return (
@@ -28,6 +31,7 @@ export default function App() {
           <NavBar />
         </header>
         <Outlet />
+        <Footer />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
@@ -37,5 +41,5 @@ export default function App() {
 }
 
 export function links() {
-  return [{ rel: 'stylesheet', href: mainStyles }]
+  return [{ rel: "stylesheet", href: mainStyles }];
 }

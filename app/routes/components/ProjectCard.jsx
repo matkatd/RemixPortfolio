@@ -8,10 +8,9 @@ function ProjectCard({ project }) {
         <h3>{project.title}</h3>
         <p>{project.date}</p>
       </div>
-      <Link className="card-button" to={project.slug}>
+      <Link className="card-button" to={"/project/" + project.slug}>
         See More
       </Link>
-      {/* <a href="./project.html?proj=${element.slug}&cat=${url}" className="card-button">See More</a> */}
     </div>
   );
 }

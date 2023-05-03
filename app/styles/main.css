@@ -76,6 +76,10 @@ h3 {
   font-family: var(--font-header);
 }
 
+p {
+  font-family: var(--font);
+}
+
 img {
   display: block;
   width: 100%;
@@ -423,6 +427,21 @@ h2.img-page {
   nav li:hover::before {
     width: 100%;
   }
+}
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40vw;
+  background-color: rgb(238, 114, 114);
+  border-radius: 20px;
+  margin: 5rem auto;
+}
+
+.error-page p {
+  text-align: center;
+  width: 70%;
 }
 
 .links-contact {

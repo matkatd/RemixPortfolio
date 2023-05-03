@@ -1,5 +1,5 @@
-
-import redArrow from "../res/red-Arrow-clipart-transparent.svg"
+import { Link } from "@remix-run/react";
+import redArrow from "../res/red-Arrow-clipart-transparent.svg";
 export const meta = () => {
   return [{ title: "David's Portfolio" }];
 };
@@ -17,12 +17,14 @@ export default function Index() {
       <img
         className="red-arrow"
         srcSet={redArrow}
-        alt="a red arrow pointing upwards"/>
-      <a className="contact-button" href="./pages/contact.html"><button>Contact</button></a>
+        alt="a red arrow pointing upwards"
+      />
+      <Link className="contact-button" to="/contact">
+        <button>Contact</button>
+      </Link>
     </main>
   );
 }
-
 
 // export function links() {
 //   return [{ rel: 'stylesheet', href: }]

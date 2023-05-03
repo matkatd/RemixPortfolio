@@ -20,16 +20,18 @@ function NavBar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to={"/wdd"}>Software Engineering</NavLink>
+            <NavLink to={"/projects?category=software_engineering"}>
+              Software Engineering
+            </NavLink>
           </li>
           <li>
-            <NavLink to={"/wdd"}>Photography</NavLink>
+            <NavLink to={"/photography"}>Photography</NavLink>
           </li>
           <li>
-            <NavLink to={"/wdd"}>Other</NavLink>
+            <NavLink to={"/projects?category=other"}>Other</NavLink>
           </li>
           <li>
-            <NavLink to={"/wdd"}>Contact</NavLink>
+            <NavLink to={"/contact"}>Contact</NavLink>
           </li>
         </ul>
       </div>
@@ -42,19 +44,23 @@ function NavBar() {
             &times;
           </div>
           <li>
-            <NavLink to="/wdd">Web Design/Development</NavLink>
+            <NavLink to={"/projects?category=wdd"}>
+              Web Design/Development
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/wdd">Software Engineering</NavLink>
+            <NavLink to={"/projects?category=software_engineering"}>
+              Software Engineering
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/wdd">Photography</NavLink>
+            <NavLink to={"/photography"}>Photography</NavLink>
           </li>
           <li>
-            <NavLink to="/wdd">Other</NavLink>
+            <NavLink to={"/projects?category=other"}>Other</NavLink>
           </li>
           <li>
-            <NavLink to="/wdd">Contact</NavLink>
+            <NavLink to={"/contact"}>Contact</NavLink>
           </li>
         </ul>
       </div>

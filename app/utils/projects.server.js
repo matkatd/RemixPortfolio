@@ -7,3 +7,11 @@ export async function getProjects(category) {
     },
   });
 }
+
+export async function getProject(slug) {
+  return prisma.projects.findFirst({
+    where: {
+      slug: slug,
+    },
+  });
+}
