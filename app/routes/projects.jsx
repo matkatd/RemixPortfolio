@@ -14,11 +14,11 @@ export async function loader({ request, params }) {
   // const param = getRequiredParam(params, "category");
   const url = new URL(request.url);
   const param = url.searchParams.get("category");
+
   if (!param) {
     return redirect("/");
   }
   const projects = await getProjects(param);
-  // console.log(projects);
   if (projects.length === 0) {
     throw new Response("Invalid category", {
       status: 404,
@@ -29,6 +29,7 @@ export async function loader({ request, params }) {
 
 export default function Projects() {
   const { projects, param } = useLoaderData();
+
   return (
     <main>
       <h2 className="grid-page img-page">{getTitle(param)}</h2>

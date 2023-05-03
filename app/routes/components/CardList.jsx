@@ -1,4 +1,4 @@
-import ProjectCard from "~/routes/components/CardList.jsx";
+import ProjectCard from "~/routes/components/ProjectCard.jsx";
 
 function CardList({ data }) {
   return (
