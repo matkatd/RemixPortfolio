@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <footer>
       <p>
-        © 2022 <br />
+        © 2023 <br />
         David Thompson
       </p>
       {/* <script src={VenoBox}></script>
