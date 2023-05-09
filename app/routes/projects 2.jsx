@@ -3,21 +3,22 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import { getProjects } from "../utils/projects.server";
+import { getProjects } from "../utils/db.server";
 
 import { json, redirect } from "@remix-run/node";
 // import { getRequiredParam, notFound } from "../../utils/http.server";
-import CardList from "./components/cardlist";
+import CardList from "~/routes/components/CardList";
+import styles from "~/styles/projects.css";
 
 export async function loader({ request, params }) {
   // const param = getRequiredParam(params, "category");
   const url = new URL(request.url);
   const param = url.searchParams.get("category");
-  // if (!param) {
-  //   return redirect("/");
-  // }
+
+  if (!param) {
+    return redirect("/");
+  }
   const projects = await getProjects(param);
-  // console.log(projects);
   if (projects.length === 0) {
     throw new Response("Invalid category", {
       status: 404,
@@ -28,6 +29,7 @@ export async function loader({ request, params }) {
 
 export default function Projects() {
   const { projects, param } = useLoaderData();
+
   return (
     <main>
       <h2 className="grid-page img-page">{getTitle(param)}</h2>
@@ -61,6 +63,10 @@ export function ErrorBoundary() {
       <pre>{error.message}</pre>
     </main>
   );
+}
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
 }
 
 function getTitle(category) {
