@@ -1,10 +1,16 @@
 // https://ckeditor.com/docs/ckeditor5/latest/installation/getting-started/getting-and-setting-data.html
 // Docs for WYSIWYG editor
 
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+
+
 
 export default function AdminNew() {
     return (
-        <div>
+        // TODO: Well, this editor is kinda broken... first trying turning into component, but may need to find a different plugin
+        <div> 
             <CKEditor
                     editor={ ClassicEditor }
                     data="<p>Hello from CKEditor 5!</p>"
