@@ -28,6 +28,8 @@
     "react-dom": "^18.2.0",
     "react-photo-album": "^2.1.0",
     "remix": "^1.16.0",
+    "slate": "^0.94.1",
+    "slate-react": "^0.94.2",
     "style-loader": "^2.0.0",
     "vercel": "^28.19.0",
     "webpack": "^5.82.1",
