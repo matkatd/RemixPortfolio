@@ -1,7 +1,7 @@
 import React from "react";
 import { cx, css } from "@emotion/css";
 
-const Icon = React.forwardRef(({ className, ...props }, ref) => (
+export const Icon = React.forwardRef(({ className, ...props }, ref) => (
   <span
     {...props}
     ref={ref}
@@ -15,5 +15,3 @@ const Icon = React.forwardRef(({ className, ...props }, ref) => (
     )}
   />
 ));
-
-export default Icon;
