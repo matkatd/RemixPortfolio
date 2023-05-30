@@ -1,8 +1,8 @@
 import React from "react";
-import Menu from "./Menu";
+import { Menu } from "./Menu";
 import { cx, css } from "@emotion/css";
 
-const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
+export const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
   <Menu
     {...props}
     ref={ref}
@@ -18,5 +18,3 @@ const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
     )}
   />
 ));
-
-export default Toolbar;

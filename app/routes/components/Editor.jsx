@@ -1,12 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { createEditor } from "slate";
+import {
+  Editor,
+  Transforms,
+  createEditor,
+  Element as SlateElement,
+} from "slate";
 import { Editable, Slate, useSlate, withReact } from "slate-react";
-import * as Helper from "./EditorHelpers";
-import Button from "./SlateComponents/Button";
-import Icon from "./SlateComponents/Icon";
-import Toolbar from "./SlateComponents/ToolBar";
 import { withHistory } from "slate-history";
 import isHotkey from "is-hotkey";
+
+import { Button } from "./SlateComponents/Button";
+import { Icon } from "./SlateComponents/Icon";
+import { Toolbar } from "./SlateComponents/ToolBar";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -15,6 +20,7 @@ const HOTKEYS = {
   "mod+`": "code",
 };
 
+const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
 const initialValue = [
@@ -25,8 +31,11 @@ const initialValue = [
 ];
 
 function EditorSlate() {
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   let [editorContent, setEditorContent] = useState(0);
+  // let [Editor, setEditor] = useState(null);
+  // useEffect(() => {
+  //   editorContent = retrieveLocalStorage();
+  // })
 
   useEffect(() => {
     setLocalStorage(editorContent);
@@ -34,10 +43,22 @@ function EditorSlate() {
 
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-
+  const [editor] = useState(() => withReact(createEditor()));
+  // const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  // TODO: Grab content from LocalStorage and use to update on load
   return (
-    <Slate editor={editor} value={initialValue}>
-      <Toolbar className="toolbar">
+    <Slate
+      editor={editor}
+      value={initialValue}
+      onChange={(value) => {
+        const isAstChange = editor.operations.some(
+          (op) => "set_selection" !== op.type
+        );
+        if (isAstChange) {
+          setEditorContent(JSON.stringify(value));
+        }
+      }}>
+      <Toolbar>
         <MarkButton format="bold" icon="format_bold" />
         <MarkButton format="italic" icon="format_italic" />
         <MarkButton format="underline" icon="format_underlined" />
@@ -55,13 +76,15 @@ function EditorSlate() {
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
+        placeholder="Enter some rich text…"
         spellCheck
+        autoFocus
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
             if (isHotkey(hotkey, event)) {
               event.preventDefault();
               const mark = HOTKEYS[hotkey];
-              Helper.toggleMark(editor, mark);
+              toggleMark(editor, mark);
             }
           }
         }}
@@ -69,6 +92,72 @@ function EditorSlate() {
     </Slate>
   );
 }
+
+const toggleBlock = (editor, format) => {
+  const isActive = isBlockActive(
+    editor,
+    format,
+    TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
+  );
+  const isList = LIST_TYPES.includes(format);
+
+  Transforms.unwrapNodes(editor, {
+    match: (n) =>
+      !Editor.isEditor(n) &&
+      SlateElement.isElement(n) &&
+      LIST_TYPES.includes(n.type) &&
+      !TEXT_ALIGN_TYPES.includes(format),
+    split: true,
+  });
+  let newProperties;
+  if (TEXT_ALIGN_TYPES.includes(format)) {
+    newProperties = {
+      align: isActive ? undefined : format,
+    };
+  } else {
+    newProperties = {
+      type: isActive ? "paragraph" : isList ? "list-item" : format,
+    };
+  }
+  Transforms.setNodes<SlateElement>(editor, newProperties);
+
+  if (!isActive && isList) {
+    const block = { type: format, children: [] };
+    Transforms.wrapNodes(editor, block);
+  }
+};
+
+const toggleMark = (editor, format) => {
+  const isActive = isMarkActive(editor, format);
+
+  if (isActive) {
+    Editor.removeMark(editor, format);
+  } else {
+    Editor.addMark(editor, format, true);
+  }
+};
+
+const isBlockActive = (editor, format, blockType = "type") => {
+  const { selection } = editor;
+  if (!selection) return false;
+
+  const [match] = Array.from(
+    Editor.nodes(editor, {
+      at: Editor.unhangRange(editor, selection),
+      match: (n) =>
+        !Editor.isEditor(n) &&
+        SlateElement.isElement(n) &&
+        n[blockType] === format,
+    })
+  );
+
+  return !!match;
+};
+
+const isMarkActive = (editor, format) => {
+  const marks = Editor.marks(editor);
+  return marks ? marks[format] === true : false;
+};
 
 const Element = ({ attributes, children, element }) => {
   const style = { textAlign: element.align };
@@ -142,16 +231,15 @@ const BlockButton = ({ format, icon }) => {
   const editor = useSlate();
   return (
     <Button
-      active={Helper.isBlockActive(
+      active={isBlockActive(
         editor,
         format,
         TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
       )}
       onMouseDown={(event) => {
         event.preventDefault();
-        Helper.toggleBlock(editor, format);
-      }}
-    >
+        toggleBlock(editor, format);
+      }}>
       <Icon>{icon}</Icon>
     </Button>
   );
@@ -161,17 +249,15 @@ const MarkButton = ({ format, icon }) => {
   const editor = useSlate();
   return (
     <Button
-      active={Helper.isMarkActive(editor, format)}
+      active={isMarkActive(editor, format)}
       onMouseDown={(event) => {
         event.preventDefault();
-        Helper.toggleMark(editor, format);
-      }}
-    >
+        toggleMark(editor, format);
+      }}>
       <Icon>{icon}</Icon>
     </Button>
   );
 };
-
 function setLocalStorage(content) {
   localStorage.setItem("content", content);
 }
