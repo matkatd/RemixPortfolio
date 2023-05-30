@@ -25,17 +25,47 @@ const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
 const initialValue = [
   {
+    type: "numbered-list",
+    children: [
+      {
+        type: "list-item",
+        children: [
+          { text: "This is editable " },
+          { text: "rich", bold: true },
+          { text: " text, " },
+          { text: "much", italic: true },
+          { text: " better than a " },
+          { text: "<textarea>", code: true },
+          { text: "!" },
+        ],
+      },
+    ],
+  },
+  {
     type: "paragraph",
-    children: [{ text: "A line of text in a paragraph." }],
+    children: [
+      {
+        text: "Since it's rich text, you can do things like turn a selection of text ",
+      },
+      { text: "bold", bold: true },
+      {
+        text: ", or add a semantically rendered block quote in the middle of the page, like this:",
+      },
+    ],
+  },
+  {
+    type: "block-quote",
+    children: [{ text: "A wise quote." }],
+  },
+  {
+    type: "paragraph",
+    align: "center",
+    children: [{ text: "Try it out for yourself!" }],
   },
 ];
 
 function EditorSlate() {
   let [editorContent, setEditorContent] = useState(0);
-  // let [Editor, setEditor] = useState(null);
-  // useEffect(() => {
-  //   editorContent = retrieveLocalStorage();
-  // })
 
   useEffect(() => {
     setLocalStorage(editorContent);
@@ -43,7 +73,7 @@ function EditorSlate() {
 
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-  const [editor] = useState(() => withReact(createEditor()));
+  const [editor] = useState(() => withHistory(withReact(createEditor())));
   // const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   // TODO: Grab content from LocalStorage and use to update on load
   return (
@@ -119,7 +149,7 @@ const toggleBlock = (editor, format) => {
       type: isActive ? "paragraph" : isList ? "list-item" : format,
     };
   }
-  Transforms.setNodes<SlateElement>(editor, newProperties);
+  Transforms.setNodes < SlateElement > (editor, newProperties);
 
   if (!isActive && isList) {
     const block = { type: format, children: [] };
@@ -258,6 +288,7 @@ const MarkButton = ({ format, icon }) => {
     </Button>
   );
 };
+
 function setLocalStorage(content) {
   localStorage.setItem("content", content);
 }
