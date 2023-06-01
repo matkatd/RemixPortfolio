@@ -1,4 +1,4 @@
-import EditorLexical from "../routes/components/EditorLexical";
+import EditorLexical from "./components/Lexical/EditorLexical";
 import SlateStyles from "../styles/slate.css";
 
 export default function AdminEdit() {
