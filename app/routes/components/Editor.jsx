@@ -29,6 +29,7 @@ const initialValue = [
     children: [
       {
         type: "list-item",
+        align: "center",
         children: [
           { text: "This is editable " },
           { text: "rich", bold: true },
@@ -73,8 +74,8 @@ function EditorSlate() {
 
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-  const [editor] = useState(() => withHistory(withReact(createEditor())));
-  // const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  // const [editor] = useState(() => withHistory(withReact(createEditor())));
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   // TODO: Grab content from LocalStorage and use to update on load
   return (
     <Slate

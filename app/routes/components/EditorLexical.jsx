@@ -1,21 +1,21 @@
-import {$getRoot, $getSelection} from 'lexical';
-import {useEffect} from 'react';
+import { $getRoot, $getSelection } from "lexical";
+import { useEffect } from "react";
 
-import {LexicalComposer} from '@lexical/react/LexicalComposer';
-import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin'
-import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {OnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
-import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
-import {ListPlugin} from '@lexical/react/LexicalListPlugin';
-import {TabIndentationPlugin} from '@lexical/react/LexicalTabIndentationPlugin';
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
+import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
 
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 
-import theme from '../../styles/lexical/PlaygroundEditorTheme';
+import theme from "../../styles/lexical/PlaygroundEditorTheme";
 
-// TODO: So turns out this Lexical Editor is mega complicated... 
+// TODO: So turns out this Lexical Editor is mega complicated...
 // Maybe try to find something somewhat more simple...
 
 // When the editor changes, you can get notified via the
@@ -54,7 +54,7 @@ function onError(error) {
 
 function LexicalEditor() {
   const initialConfig = {
-    namespace: 'MyEditor', 
+    namespace: "MyEditor",
     theme,
     onError,
   };
@@ -69,11 +69,9 @@ function LexicalEditor() {
         placeholder={<div>Enter some text...</div>}
         ErrorBoundary={LexicalErrorBoundary}
       />
-      <LinkPlugin />
-      <ListPlugin />
+      {/* <LinkPlugin />
+      <ListPlugin /> */}
       <TabIndentationPlugin />
-      
-
     </LexicalComposer>
   );
 }
