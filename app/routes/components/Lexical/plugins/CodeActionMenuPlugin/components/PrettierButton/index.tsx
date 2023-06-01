@@ -7,11 +7,12 @@
  */
 import './index.css';
 
-import {$isCodeNode} from '@lexical/code';
-import {$getNearestNodeFromDOMNode, LexicalEditor} from 'lexical';
-import {Options} from 'prettier';
+import { $isCodeNode } from '@lexical/code';
+import { $getNearestNodeFromDOMNode, LexicalEditor } from 'lexical';
+
+import { Options } from 'prettier';
 import * as React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 
 interface Props {
   lang: string;
@@ -34,7 +35,7 @@ async function loadPrettierParserByLang(lang: string) {
 }
 
 async function loadPrettierFormat() {
-  const {format} = await import('prettier/standalone');
+  const { format } = await import('prettier/standalone');
   return format;
 }
 
@@ -70,7 +71,7 @@ function getPrettierOptions(lang: string): Options {
   return options;
 }
 
-export function PrettierButton({lang, editor, getCodeDOMNode}: Props) {
+export function PrettierButton({ lang, editor, getCodeDOMNode }: Props) {
   const [syntaxError, setSyntaxError] = useState<string>('');
   const [tipsVisible, setTipsVisible] = useState<boolean>(false);
 
