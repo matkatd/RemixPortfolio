@@ -12,7 +12,7 @@ import type {
   LexicalEditor,
 } from 'lexical';
 
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import useLexicalEditable from '@lexical/react/useLexicalEditable';
 import {
   $deleteTableColumn__EXPERIMENTAL,
@@ -45,12 +45,12 @@ import {
   GridSelection,
 } from 'lexical';
 import * as React from 'react';
-import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
-import {createPortal} from 'react-dom';
-import invariant from 'shared/invariant';
+import { ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import invariant from '~/utils/invariant';
 
-import useModal from '../../hooks/useModal';
-import ColorPicker from '../../ui/ColorPicker';
+import useModal from '~/hooks/useModal';
+import ColorPicker from '~/ui/ColorPicker';
 
 function computeSelectionCount(selection: GridSelection): {
   columns: number;
@@ -158,7 +158,7 @@ function currentCellBackgroundColor(editor: LexicalEditor): null | string {
 }
 
 type TableCellActionMenuProps = Readonly<{
-  contextRef: {current: null | HTMLElement};
+  contextRef: { current: null | HTMLElement };
   onClose: () => void;
   setIsMenuOpen: (isOpen: boolean) => void;
   showColorPickerModal: (
@@ -213,8 +213,8 @@ function TableActionMenu({
         updateSelectionCounts(computeSelectionCount(selection));
         setCanMergeCells(
           isGridSelectionRectangular(selection) &&
-            (currentSelectionCounts.columns > 1 ||
-              currentSelectionCounts.rows > 1),
+          (currentSelectionCounts.columns > 1 ||
+            currentSelectionCounts.rows > 1),
         );
       }
       // Unmerge cell
@@ -304,7 +304,7 @@ function TableActionMenu({
     editor.update(() => {
       const selection = $getSelection();
       if (DEPRECATED_$isGridSelection(selection)) {
-        const {columns, rows} = computeSelectionCount(selection);
+        const { columns, rows } = computeSelectionCount(selection);
         const nodes = selection.getNodes();
         let firstCell: null | DEPRECATED_GridCellNode = null;
         for (let i = 0; i < nodes.length; i++) {
@@ -590,7 +590,7 @@ function TableActionMenu({
       <button className="item" onClick={() => toggleTableRowIsHeader()}>
         <span className="text">
           {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===
-          TableCellHeaderStates.ROW
+            TableCellHeaderStates.ROW
             ? 'Remove'
             : 'Add'}{' '}
           row header
@@ -599,7 +599,7 @@ function TableActionMenu({
       <button className="item" onClick={() => toggleTableColumnIsHeader()}>
         <span className="text">
           {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
-          TableCellHeaderStates.COLUMN
+            TableCellHeaderStates.COLUMN
             ? 'Remove'
             : 'Add'}{' '}
           column header

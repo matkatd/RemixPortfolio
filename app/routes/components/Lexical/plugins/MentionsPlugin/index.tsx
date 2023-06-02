@@ -6,19 +6,19 @@
  *
  */
 
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   LexicalTypeaheadMenuPlugin,
   MenuOption,
   MenuTextMatch,
   useBasicTypeaheadTriggerMatch,
 } from '@lexical/react/LexicalTypeaheadMenuPlugin';
-import {TextNode} from 'lexical';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import { TextNode } from 'lexical';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import {$createMentionNode} from '../../nodes/MentionNode';
+import { $createMentionNode } from '~/nodes/MentionNode';
 
 const PUNCTUATION =
   '\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%\'"~=<>_:;';
@@ -55,16 +55,16 @@ const LENGTH_LIMIT = 75;
 
 const AtSignMentionsRegex = new RegExp(
   '(^|\\s|\\()(' +
-    '[' +
-    TRIGGERS +
-    ']' +
-    '((?:' +
-    VALID_CHARS +
-    VALID_JOINS +
-    '){0,' +
-    LENGTH_LIMIT +
-    '})' +
-    ')$',
+  '[' +
+  TRIGGERS +
+  ']' +
+  '((?:' +
+  VALID_CHARS +
+  VALID_JOINS +
+  '){0,' +
+  LENGTH_LIMIT +
+  '})' +
+  ')$',
 );
 
 // 50 is the longest alias length limit.
@@ -73,15 +73,15 @@ const ALIAS_LENGTH_LIMIT = 50;
 // Regex used to match alias.
 const AtSignMentionsRegexAliasRegex = new RegExp(
   '(^|\\s|\\()(' +
-    '[' +
-    TRIGGERS +
-    ']' +
-    '((?:' +
-    VALID_CHARS +
-    '){0,' +
-    ALIAS_LENGTH_LIMIT +
-    '})' +
-    ')$',
+  '[' +
+  TRIGGERS +
+  ']' +
+  '((?:' +
+  VALID_CHARS +
+  '){0,' +
+  ALIAS_LENGTH_LIMIT +
+  '})' +
+  ')$',
 );
 
 // At most, 5 suggestions are shown in the popup.
@@ -691,31 +691,31 @@ export default function NewMentionsPlugin(): JSX.Element | null {
       options={options}
       menuRenderFn={(
         anchorElementRef,
-        {selectedIndex, selectOptionAndCleanUp, setHighlightedIndex},
+        { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex },
       ) =>
         anchorElementRef.current && results.length
           ? ReactDOM.createPortal(
-              <div className="typeahead-popover mentions-menu">
-                <ul>
-                  {options.map((option, i: number) => (
-                    <MentionsTypeaheadMenuItem
-                      index={i}
-                      isSelected={selectedIndex === i}
-                      onClick={() => {
-                        setHighlightedIndex(i);
-                        selectOptionAndCleanUp(option);
-                      }}
-                      onMouseEnter={() => {
-                        setHighlightedIndex(i);
-                      }}
-                      key={option.key}
-                      option={option}
-                    />
-                  ))}
-                </ul>
-              </div>,
-              anchorElementRef.current,
-            )
+            <div className="typeahead-popover mentions-menu">
+              <ul>
+                {options.map((option, i: number) => (
+                  <MentionsTypeaheadMenuItem
+                    index={i}
+                    isSelected={selectedIndex === i}
+                    onClick={() => {
+                      setHighlightedIndex(i);
+                      selectOptionAndCleanUp(option);
+                    }}
+                    onMouseEnter={() => {
+                      setHighlightedIndex(i);
+                    }}
+                    key={option.key}
+                    option={option}
+                  />
+                ))}
+              </ul>
+            </div>,
+            anchorElementRef.current,
+          )
           : null
       }
     />

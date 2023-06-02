@@ -6,7 +6,7 @@
  *
  */
 
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   LexicalTypeaheadMenuPlugin,
   MenuOption,
@@ -19,7 +19,7 @@ import {
   TextNode,
 } from 'lexical';
 import * as React from 'react';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 
 class EmojiOption extends MenuOption {
@@ -95,18 +95,18 @@ export default function EmojiPickerPlugin() {
 
   useEffect(() => {
     // @ts-ignore
-    import('../../utils/emoji-list.ts').then((file) => setEmojis(file.default));
+    import('~/utils/emoji-list.ts').then((file) => setEmojis(file.default));
   }, []);
 
   const emojiOptions = useMemo(
     () =>
       emojis != null
         ? emojis.map(
-            ({emoji, aliases, tags}) =>
-              new EmojiOption(aliases[0], emoji, {
-                keywords: [...aliases, ...tags],
-              }),
-          )
+          ({ emoji, aliases, tags }) =>
+            new EmojiOption(aliases[0], emoji, {
+              keywords: [...aliases, ...tags],
+            }),
+        )
         : [],
     [emojis],
   );
@@ -122,8 +122,8 @@ export default function EmojiPickerPlugin() {
           ? new RegExp(queryString, 'gi').exec(option.title) ||
             option.keywords != null
             ? option.keywords.some((keyword: string) =>
-                new RegExp(queryString, 'gi').exec(keyword),
-              )
+              new RegExp(queryString, 'gi').exec(keyword),
+            )
             : false
           : emojiOptions;
       })
@@ -163,7 +163,7 @@ export default function EmojiPickerPlugin() {
       options={options}
       menuRenderFn={(
         anchorElementRef,
-        {selectedIndex, selectOptionAndCleanUp, setHighlightedIndex},
+        { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex },
       ) => {
         if (anchorElementRef.current == null || options.length === 0) {
           return null;
@@ -171,28 +171,28 @@ export default function EmojiPickerPlugin() {
 
         return anchorElementRef.current && options.length
           ? ReactDOM.createPortal(
-              <div className="typeahead-popover emoji-menu">
-                <ul>
-                  {options.map((option: EmojiOption, index) => (
-                    <div key={option.key}>
-                      <EmojiMenuItem
-                        index={index}
-                        isSelected={selectedIndex === index}
-                        onClick={() => {
-                          setHighlightedIndex(index);
-                          selectOptionAndCleanUp(option);
-                        }}
-                        onMouseEnter={() => {
-                          setHighlightedIndex(index);
-                        }}
-                        option={option}
-                      />
-                    </div>
-                  ))}
-                </ul>
-              </div>,
-              anchorElementRef.current,
-            )
+            <div className="typeahead-popover emoji-menu">
+              <ul>
+                {options.map((option: EmojiOption, index) => (
+                  <div key={option.key}>
+                    <EmojiMenuItem
+                      index={index}
+                      isSelected={selectedIndex === index}
+                      onClick={() => {
+                        setHighlightedIndex(index);
+                        selectOptionAndCleanUp(option);
+                      }}
+                      onMouseEnter={() => {
+                        setHighlightedIndex(index);
+                      }}
+                      option={option}
+                    />
+                  </div>
+                ))}
+              </ul>
+            </div>,
+            anchorElementRef.current,
+          )
           : null;
       }}
     />

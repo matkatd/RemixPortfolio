@@ -8,10 +8,10 @@
 
 import './index.css';
 
-import {$isCodeHighlightNode} from '@lexical/code';
-import {$isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {mergeRegister} from '@lexical/utils';
+import { $isCodeHighlightNode } from '@lexical/code';
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { mergeRegister } from '@lexical/utils';
 import {
   $getSelection,
   $isRangeSelection,
@@ -21,14 +21,14 @@ import {
   LexicalEditor,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import * as React from 'react';
-import {createPortal} from 'react-dom';
+import { createPortal } from 'react-dom';
 
-import {getDOMRangeRect} from '../../utils/getDOMRangeRect';
-import {getSelectedNode} from '../../utils/getSelectedNode';
-import {setFloatingElemPosition} from '../../utils/setFloatingElemPosition';
-import {INSERT_INLINE_COMMAND} from '../CommentPlugin';
+import { getDOMRangeRect } from '~/utils/getDOMRangeRect';
+import { getSelectedNode } from '~/utils/getSelectedNode';
+import { setFloatingElemPosition } from '~/utils/setFloatingElemPosition';
+import { INSERT_INLINE_COMMAND } from '../CommentPlugin';
 
 function TextFormatFloatingToolbar({
   editor,
@@ -155,7 +155,7 @@ function TextFormatFloatingToolbar({
       updateTextFormatFloatingToolbar();
     });
     return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
+      editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           updateTextFormatFloatingToolbar();
         });
