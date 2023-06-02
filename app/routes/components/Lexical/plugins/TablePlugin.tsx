@@ -6,8 +6,8 @@
  *
  */
 
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {INSERT_TABLE_COMMAND} from '@lexical/table';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { INSERT_TABLE_COMMAND } from '@lexical/table';
 import {
   $insertNodes,
   COMMAND_PRIORITY_EDITOR,
@@ -18,14 +18,14 @@ import {
   LexicalEditor,
   LexicalNode,
 } from 'lexical';
-import {createContext, useContext, useEffect, useMemo, useState} from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import * as React from 'react';
-import invariant from 'shared/invariant';
+import invariant from '~/utils/invariant';
 
-import {$createTableNodeWithDimensions, TableNode} from '../nodes/TableNode';
-import Button from '../ui/Button';
-import {DialogActions} from '../ui/Dialog';
-import TextInput from '../ui/TextInput';
+import { $createTableNodeWithDimensions, TableNode } from '~/nodes/TableNode';
+import Button from '~/ui/Button';
+import { DialogActions } from '~/ui/Dialog';
+import TextInput from '~/ui/TextInput';
 
 export type InsertTableCommandPayload = Readonly<{
   columns: string;
@@ -61,7 +61,7 @@ export const CellContext = createContext<CellContextShape>({
   },
 });
 
-export function TableContext({children}: {children: JSX.Element}) {
+export function TableContext({ children }: { children: JSX.Element }) {
   const [contextValue, setContextValue] = useState<{
     cellEditorConfig: null | CellEditorConfig;
     cellEditorPlugins: null | JSX.Element | Array<JSX.Element>;
@@ -76,7 +76,7 @@ export function TableContext({children}: {children: JSX.Element}) {
           cellEditorConfig: contextValue.cellEditorConfig,
           cellEditorPlugins: contextValue.cellEditorPlugins,
           set: (cellEditorConfig, cellEditorPlugins) => {
-            setContextValue({cellEditorConfig, cellEditorPlugins});
+            setContextValue({ cellEditorConfig, cellEditorPlugins });
           },
         }),
         [contextValue.cellEditorConfig, contextValue.cellEditorPlugins],
@@ -165,7 +165,7 @@ export function InsertNewTableDialog({
   }, [rows, columns]);
 
   const onClick = () => {
-    activeEditor.dispatchCommand(INSERT_NEW_TABLE_COMMAND, {columns, rows});
+    activeEditor.dispatchCommand(INSERT_NEW_TABLE_COMMAND, { columns, rows });
     onClose();
   };
 
@@ -215,7 +215,7 @@ export function TablePlugin({
 
     return editor.registerCommand<InsertTableCommandPayload>(
       INSERT_NEW_TABLE_COMMAND,
-      ({columns, rows, includeHeaders}) => {
+      ({ columns, rows, includeHeaders }) => {
         const tableNode = $createTableNodeWithDimensions(
           Number(rows),
           Number(columns),

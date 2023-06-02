@@ -6,28 +6,28 @@
  *
  */
 
-import type {LexicalEditor, NodeKey} from 'lexical';
+import type { LexicalEditor, NodeKey } from 'lexical';
 
 import './StickyNode.css';
 
-import {useCollaborationContext} from '@lexical/react/LexicalCollaborationContext';
-import {CollaborationPlugin} from '@lexical/react/LexicalCollaborationPlugin';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext';
+import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
-import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {LexicalNestedComposer} from '@lexical/react/LexicalNestedComposer';
-import {PlainTextPlugin} from '@lexical/react/LexicalPlainTextPlugin';
-import {$getNodeByKey} from 'lexical';
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
+import { LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer';
+import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
+import { $getNodeByKey } from 'lexical';
 import * as React from 'react';
-import {useEffect, useRef} from 'react';
-import useLayoutEffect from 'shared/useLayoutEffect';
+import { useEffect, useRef } from 'react';
+import useLayoutEffect from '~/utils/useLayoutEffect';
 
-import {createWebsocketProvider} from '../collaboration';
-import {useSharedHistoryContext} from '../context/SharedHistoryContext';
-import StickyEditorTheme from '../themes/StickyEditorTheme';
-import ContentEditable from '../ui/ContentEditable';
-import Placeholder from '../ui/Placeholder';
-import {$isStickyNode} from './StickyNode';
+import { createWebsocketProvider } from '~/routes/components/Lexical/collaboration';
+import { useSharedHistoryContext } from '~/routes/components/Lexical/context/SharedHistoryContext';
+import StickyEditorTheme from '~/styles/lexical/StickyEditorTheme';
+import ContentEditable from '~/ui/ContentEditable';
+import Placeholder from '~/ui/Placeholder';
+import { $isStickyNode } from './StickyNode';
 
 type Positioning = {
   isDragging: boolean;
@@ -73,7 +73,7 @@ export default function StickyComponent({
     x: 0,
     y: 0,
   });
-  const {isCollabActive} = useCollaborationContext();
+  const { isCollabActive } = useCollaborationContext();
 
   useEffect(() => {
     const position = positioningRef.current;
@@ -91,7 +91,7 @@ export default function StickyComponent({
     const resizeObserver = new ResizeObserver((entries) => {
       for (let i = 0; i < entries.length; i++) {
         const entry = entries[i];
-        const {target} = entry;
+        const { target } = entry;
         position.rootElementRect = target.getBoundingClientRect();
         const stickyContainer = stickyContainerRef.current;
         if (stickyContainer !== null) {
@@ -192,7 +192,7 @@ export default function StickyComponent({
     });
   };
 
-  const {historyState} = useSharedHistoryContext();
+  const { historyState } = useSharedHistoryContext();
 
   return (
     <div ref={stickyContainerRef} className="sticky-note-container">
@@ -211,7 +211,7 @@ export default function StickyComponent({
           const stickContainer = stickyContainer;
           const positioning = positioningRef.current;
           if (stickContainer !== null) {
-            const {top, left} = stickContainer.getBoundingClientRect();
+            const { top, left } = stickContainer.getBoundingClientRect();
             positioning.offsetX = event.clientX - left;
             positioning.offsetY = event.clientY - top;
             positioning.isDragging = true;
