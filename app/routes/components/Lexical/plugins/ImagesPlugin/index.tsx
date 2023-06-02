@@ -7,6 +7,10 @@
  */
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $wrapNodeInElement, mergeRegister } from '@lexical/utils';
+import type {
+  LexicalCommand,
+  LexicalEditor
+} from 'lexical';
 import {
   $createParagraphNode,
   $createRangeSelection,
@@ -21,19 +25,19 @@ import {
   createCommand,
   DRAGOVER_COMMAND,
   DRAGSTART_COMMAND,
-  DROP_COMMAND,
-  LexicalCommand,
-  LexicalEditor,
+  DROP_COMMAND
 } from 'lexical';
 import { useEffect, useRef, useState } from 'react';
 import * as React from 'react';
 import { CAN_USE_DOM } from '~/utils/canUseDOM';
 
+import type {
+  ImagePayload
+} from '~/nodes/ImageNode';
 import {
   $createImageNode,
   $isImageNode,
-  ImageNode,
-  ImagePayload,
+  ImageNode
 } from '~/nodes/ImageNode';
 import Button from '~/ui/Button';
 import { DialogActions, DialogButtonsList } from '~/ui/Dialog';
@@ -41,6 +45,19 @@ import FileInput from '~/ui/FileInput';
 import TextInput from '~/ui/TextInput';
 
 export type InsertImagePayload = Readonly<ImagePayload>;
+const TRANSPARENT_IMAGE =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+const canUseDOM = !!(
+  typeof window !== "undefined" &&
+  window.document &&
+  window.document.createElement
+);
+
+var img: HTMLImageElement;
+
+
+
 
 const getDOMSelection = (targetWindow: Window | null): Selection | null =>
   CAN_USE_DOM ? (targetWindow || window).getSelection() : null;
@@ -210,9 +227,17 @@ export default function ImagesPlugin({
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
+    img = document.createElement('img');
+    img.src = TRANSPARENT_IMAGE;
+  });
+
+  useEffect(() => {
     if (!editor.hasNodes([ImageNode])) {
       throw new Error('ImagesPlugin: ImageNode not registered on editor');
     }
+
+
+
 
     return mergeRegister(
       editor.registerCommand<InsertImagePayload>(
@@ -255,10 +280,7 @@ export default function ImagesPlugin({
   return null;
 }
 
-const TRANSPARENT_IMAGE =
-  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-const img = document.createElement('img');
-img.src = TRANSPARENT_IMAGE;
+
 
 function onDragStart(event: DragEvent): boolean {
   const node = getImageNodeInSelection();

@@ -36,6 +36,7 @@
     "react-dom": "^18.2.0",
     "react-photo-album": "^2.1.0",
     "remix": "^1.16.0",
+    "remix-utils": "^6.3.0",
     "slate": "^0.94.1",
     "slate-history": "^0.93.0",
     "slate-react": "^0.94.2",

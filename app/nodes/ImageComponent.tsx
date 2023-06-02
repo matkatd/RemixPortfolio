@@ -18,11 +18,9 @@ import './ImageNode.css';
 
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext';
-import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin';
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection';
@@ -44,7 +42,6 @@ import {
 import * as React from 'react';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
-import { createWebsocketProvider } from '~/routes/components/Lexical/collaboration';
 import { useSettings } from '~/routes/components/Lexical/context/SettingsContext';
 import { useSharedHistoryContext } from '~/routes/components/Lexical/context/SharedHistoryContext';
 import EmojisPlugin from '~/routes/components/Lexical/plugins/EmojisPlugin';
@@ -355,15 +352,6 @@ export default function ImageComponent({
               <EmojisPlugin />
               <HashtagPlugin />
               <KeywordsPlugin />
-              {isCollabActive ? (
-                <CollaborationPlugin
-                  id={caption.getKey()}
-                  providerFactory={createWebsocketProvider}
-                  shouldBootstrap={true}
-                />
-              ) : (
-                <HistoryPlugin externalHistoryState={historyState} />
-              )}
               <RichTextPlugin
                 contentEditable={
                   <ContentEditable className="ImageNode__contentEditable" />
