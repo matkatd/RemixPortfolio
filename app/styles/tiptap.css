@@ -1,4 +1,7 @@
 /* Basic editor styles */
+:root {
+  --toolbar-color: rgb(176, 243, 243);
+}
 
 .ProseMirror > * + * {
   margin-top: 0.75em;
@@ -23,6 +26,10 @@
   color: #616161;
 }
 
+strong {
+  font-family: var(--font-header)
+}
+
 .ProseMirror pre {
   background: #0D0D0D;
   color: #FFF;
@@ -38,7 +45,6 @@
   font-size: 0.8rem;
 }
 
-
 .ProseMirror img {
   max-width: 100%;
   height: auto;
@@ -46,11 +52,47 @@
 
 .ProseMirror blockquote {
   padding-left: 1rem;
-  border-left: 2px solid rgba(#0D0D0D, 0.1);
+  border-left: 2px solid rgba(#0d0d0d, 0.1);
 }
 
 .ProseMirror hr {
   border: none;
-  border-top: 2px solid rgba(#0D0D0D, 0.1);
+  border-top: 2px solid rgba(72, 36, 77, 0.906);
   margin: 2rem 0;
+}
+
+.editor {
+  background-color: var(--toolbar-color);
+  width: 90vw;
+  margin: 15px auto;
+  border-radius: 10px;
+  padding-top: .5rem;
+}
+
+.toolbar {
+  background-color: var(--toolbar-color);
+  border-radius: 10px;
+  padding-bottom: .5rem;
+}
+
+.toolbar button {
+  font-size: 1rem;
+  background-color: white;
+  border: black 2px solid;
+  padding: .25rem 1rem;
+  margin: 3px 10px;
+  border-radius: 3px;
+
+
+}
+
+.toolbar button:hover {
+  background-color: #cecece;
+}
+
+.ProseMirror {
+  background-color: white;
+  min-height: 20rem;
+  padding: 5px 1rem 5px 1rem;
+  border-radius: 0 0 10px 10px;
 }
