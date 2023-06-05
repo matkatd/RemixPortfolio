@@ -1,17 +1,19 @@
-import EditorLexical from "./components/Lexical/EditorLexical";
-import SlateStyles from "../styles/slate.css";
-import { Suspense } from "react";
+// import EditorLexical from "./components/Lexical/EditorLexical";
+import styles from "react-quill/dist/quill.snow.css";
+import { Suspense, lazy } from "react";
+// import QuillEditor from "./components/QuillEditor";
+const QuillEditor = lazy(() => import("./components/QuillEditor"));
 
 export default function AdminEdit() {
   return (
     <div className="text-editor">
       <Suspense fallback={null}>
-        <EditorLexical />
+        <QuillEditor />
       </Suspense>
     </div>
   );
 }
 
 export function links() {
-  return [{ rel: "stylesheet", href: SlateStyles }];
+  return [{ rel: "stylesheet", href: styles }];
 }
