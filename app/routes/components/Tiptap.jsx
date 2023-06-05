@@ -7,6 +7,7 @@ import { TextStyle } from "@tiptap/extension-text-style";
 import { ListItem } from "@tiptap/extension-list-item";
 
 import ToolBar from "./ToolBar";
+import TextAlign from "@tiptap/extension-text-align";
 
 const Tiptap = () => {
   const editor = useEditor({
@@ -23,6 +24,9 @@ const Tiptap = () => {
       }),
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       TextStyle.configure({ types: [ListItem.name] }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
     ],
     content: "<p>Hello World! 🌎️</p>",
   });
