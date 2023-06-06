@@ -9,7 +9,11 @@ import { ListItem } from "@tiptap/extension-list-item";
 import ToolBar from "./ToolBar";
 import TextAlign from "@tiptap/extension-text-align";
 
-const Tiptap = () => {
+const Tiptap = ({ project, childToParent }) => {
+  const starterContent = project
+    ? project.writeup.join(" ")
+    : "<p>Hello World! 🌎️</p>";
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -28,7 +32,10 @@ const Tiptap = () => {
         types: ["heading", "paragraph"],
       }),
     ],
-    content: "<p>Hello World! 🌎️</p>",
+    content: starterContent,
+    onUpdate({ editor }) {
+      childToParent(editor.getHTML);
+    },
   });
 
   return (

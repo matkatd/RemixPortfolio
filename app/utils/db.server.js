@@ -8,6 +8,10 @@ export async function getProjects(category) {
   });
 }
 
+export async function getAllProjects() {
+  return prisma.projects.findMany();
+}
+
 export async function getProject(slug) {
   return prisma.projects.findFirst({
     where: {
