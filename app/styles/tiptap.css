@@ -1,6 +1,6 @@
 /* Basic editor styles */
 :root {
-  --toolbar-color: rgb(176, 243, 243);
+  --toolbar-color: rgb(141, 229, 229);
 }
 
 .ProseMirror > * + * {
@@ -57,7 +57,7 @@ strong {
 
 .ProseMirror hr {
   border: none;
-  border-top: 2px solid rgba(72, 36, 77, 0.906);
+  border-top: 2px solid var(--footer-color);
   margin: 2rem 0;
 }
 
@@ -67,6 +67,7 @@ strong {
   margin: 15px auto;
   border-radius: 10px;
   padding-top: .5rem;
+  border: var(--footer-color) solid 3px;
 }
 
 .toolbar {
@@ -78,7 +79,7 @@ strong {
 .toolbar button {
   font-size: 1rem;
   background-color: white;
-  border: black 2px solid;
+  border: var(--footer-color) 2px solid;
   padding: .25rem 1rem;
   margin: 3px 10px;
   border-radius: 3px;
@@ -92,7 +93,7 @@ strong {
 
 .ProseMirror {
   background-color: white;
-  min-height: 20rem;
+  min-height: 50vh;
   padding: 5px 1rem 5px 1rem;
   border-radius: 0 0 10px 10px;
 }

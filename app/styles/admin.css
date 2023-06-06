@@ -1,6 +1,6 @@
 :root {
-  --admin-color: white;
-  --login-background: rgb(207, 236, 248);
+  --admin-color: rgb(219, 242, 251);
+  --login-background: rgba(104, 191, 241, 0.869);
   --main-blue: #3083dc;
   --nav-color: #f7cb5c;
 }
@@ -75,4 +75,8 @@ main {
 .editor-paragraph {
   margin: 0 0 15px 0;
   position: relative;
+}
+
+.delete {
+  background-color: rgb(187, 26, 12);
 }
