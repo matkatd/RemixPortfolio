@@ -34,7 +34,9 @@ const Tiptap = ({ project, childToParent }) => {
     ],
     content: starterContent,
     onUpdate({ editor }) {
-      childToParent(editor.getHTML);
+      if (editor) {
+        childToParent(editor.getHTML);
+      }
     },
   });
 
