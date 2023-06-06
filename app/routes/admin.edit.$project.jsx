@@ -17,6 +17,7 @@ export async function loader({ params }) {
 export async function action({ request }) {
   const formData = await request.formData();
   const values = Object.fromEntries(formData);
+  // TODO: Next up is uploading the main image to GCS
 }
 
 export default function AdminEdit() {
@@ -25,25 +26,42 @@ export default function AdminEdit() {
 
   const childToParent = (childData) => {
     setData(childData);
-    // this seems to be breaking things...
   };
   const title = project.title;
   return (
     <>
       <Form method="post" reloadDocument>
-        <label for="category">Choose Category</label>
-        <select name="category" id="category">
-          <option value="wdd">Web Design & Development</option>
-          <option value="software_engineering">Software Engineering</option>
-          <option value="other">Other</option>
-        </select>
-        <label for="title">Name of Post</label>
-        <input type="text" id="title" name="title" value={title} />
-        <img src={project.img} alt={project.alt} />
+        <div className="category-dropdown">
+          <label htmlFor="category">Choose Category</label>
+          <br />
+          <div className="select">
+            <select name="category" id="category">
+              <option value="wdd">Web Design & Development</option>
+              <option value="software_engineering">Software Engineering</option>
+              <option value="other">Other</option>
+            </select>
+            <span className="focus"></span>
+          </div>
+          <br />
+        </div>
+        <div className="post-title">
+          <label htmlFor="title">Name of Post</label>
+          <br />
+          <input type="text" id="title" name="title" defaultValue={title} />
+        </div>
+        <br />
+        <label className="image-upload" htmlFor="img">
+          Upload an Image
+        </label>
         <input type="file" id="img" name="img" accept="image/*" />
+        <br />
+        <img src={project.img} alt={project.alt} className="edit-image" />
         <input type="hidden" value={data} name="writeup"></input>
+        <Tiptap project={project} childToParent={childToParent} />
+        <button className="submit" type="submit">
+          Create
+        </button>
       </Form>
-      <Tiptap project={project} childToParent={childToParent} />
     </>
   );
 }

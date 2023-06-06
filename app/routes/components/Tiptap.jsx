@@ -35,11 +35,11 @@ const Tiptap = ({ project, childToParent }) => {
     content: starterContent,
     onUpdate({ editor }) {
       if (editor) {
-        childToParent(editor.getHTML);
+        childToParent(editor.getHTML());
       }
     },
   });
-
+  // TODO: allow user to insert images and have them uploaded to GSC
   return (
     <div className="editor">
       <ToolBar editor={editor} />
