@@ -11,10 +11,10 @@ function AdminCard({ project }) {
         <h3>{project.title}</h3>
         <p>{project.date}</p>
       </div>
-      <Link className="card-button" to={"/edit/" + project.slug}>
+      <Link className="card-button" to={"edit/" + project.slug}>
         Edit
       </Link>
-      <Link className="card-button delete" to={"/edit/" + project.slug}>
+      <Link className="card-button delete" to={"edit/" + project.slug}>
         Delete
       </Link>
     </div>
