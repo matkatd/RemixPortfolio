@@ -18,6 +18,7 @@ export async function action({ request }) {
   const formData = await request.formData();
   const values = Object.fromEntries(formData);
   // TODO: Next up is uploading the main image to GCS
+  return {};
 }
 
 export default function AdminEdit() {
@@ -28,6 +29,7 @@ export default function AdminEdit() {
     setData(childData);
   };
   const title = project.title;
+
   return (
     <>
       <Form method="post" reloadDocument>
@@ -57,11 +59,12 @@ export default function AdminEdit() {
         <br />
         <img src={project.img} alt={project.alt} className="edit-image" />
         <input type="hidden" value={data} name="writeup"></input>
-        <Tiptap project={project} childToParent={childToParent} />
+
         <button className="submit" type="submit">
           Create
         </button>
       </Form>
+      <Tiptap project={project} childToParent={childToParent} />
     </>
   );
 }

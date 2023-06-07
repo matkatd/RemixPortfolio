@@ -8,6 +8,7 @@ import { ListItem } from "@tiptap/extension-list-item";
 
 import ToolBar from "./ToolBar";
 import TextAlign from "@tiptap/extension-text-align";
+import Link from "@tiptap/extension-link";
 
 const Tiptap = ({ project, childToParent }) => {
   const starterContent = project
@@ -30,6 +31,9 @@ const Tiptap = ({ project, childToParent }) => {
       TextStyle.configure({ types: [ListItem.name] }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
+      }),
+      Link.configure({
+        protocols: ["ftp", "mailto"],
       }),
     ],
     content: starterContent,

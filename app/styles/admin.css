@@ -216,3 +216,39 @@ select:focus + .focus {
   font-family: var(--font-header);
   border-radius: 5px;
 }
+
+#linkInput {
+  /* position: absolute;
+  top: 1000px; */
+  z-index: 100;
+}
+
+#linkInput label {
+  font-family: var(--font);
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+#linkInput input {
+  font-family: var(--font);
+  font-size: 1rem;
+}
+
+#linkInput button {
+  background-color: var(--main-blue);
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  color: white;
+  font-size: 1rem;
+  font-family: var(--font-header);
+  border-radius: 5px;
+}
+
+#linkInput #remove {
+  background-color: rgb(192, 30, 30);
+}
+
+#linkInput #confirmBtn {
+  background-color: #18af5e;
+}
