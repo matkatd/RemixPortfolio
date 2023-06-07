@@ -22,7 +22,6 @@ function ToolBar({ editor }) {
       favDialog.showModal();
     });
 
-    // "Favorite animal" input sets the value of the submit button
     selectEl?.addEventListener("change", (e) => {
       confirmBtn.value = selectEl.value;
     });
