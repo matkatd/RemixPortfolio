@@ -17,7 +17,8 @@ export async function loader({ params }) {
 export async function action({ request }) {
   const formData = await request.formData();
   const values = Object.fromEntries(formData);
-  // TODO: Next up is uploading the main image to GCS
+  // TODO: Next up is uploading the main image to GCP
+  // TODO: then, we get to put everything into MongoDB
   return {};
 }
 
