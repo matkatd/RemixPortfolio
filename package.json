@@ -16,6 +16,7 @@
     "@remix-run/react": "^1.15.0",
     "@remix-run/serve": "^1.15.0",
     "@tiptap/extension-color": "^2.0.3",
+    "@tiptap/extension-link": "^2.0.3",
     "@tiptap/extension-list-item": "^2.0.3",
     "@tiptap/extension-text-align": "^2.0.3",
     "@tiptap/extension-text-style": "^2.0.3",
