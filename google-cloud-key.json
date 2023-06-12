@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "portfolio-368218",
+    "private_key_id": "af45edaeff6c318d4f05720a8c58f8569be918e3",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDGQe8PiPue5CsW\njdF/UbqdSXir5DdJpdderSyNXObAlnuukXRVyH0TVE7ctYN0IzfVz7R7UsQygcZt\nCxDa4bAAtxcMMjN6AC2agLjal4I7ggC7PPNaKjOjazWZ/OCnOq4dzh5uMCSpqzq3\nDuGzsvMtZzYFR3oCRZ3VnISvVWJbVmO4LxIOf5HjKuSPXWLwXQ2H3fNurHkFHNlt\n2cZMAG0OQikltg0q+PMJxv55tHPoue3kzDenUM+0krUndZ45H4IbTP7FRRcOsMx0\n1zRKBBHi4VExXfuSklk/TuOqnZurMcnt1NUVwhiPy/5xGQ8PNlSDlXSolb5BzE4l\nbEAAUNi3AgMBAAECggEAI2A0dgMtUsbH4Xhgv2Un9VTc0V8hdmS/L0ebQYYoLokr\nfJS7u2rQ1pgekkdZM2ntVpt/StoT5Cc/7skgss2+iAIjfKugf850VLNPSMHsHQ4v\nbzmK+rW5DRneMKHsvCo+U1cqGuNAR34kNfHT2CrANYPLIdoFLU6awTjyfA6yRDWv\nm5gEB35kAFbLq8CTUkLHeGW1UDKc9MhM9LvlOIEsrLT9UQTybL+nZKRKm4s3LmWv\n7goQ+aztdwtxG+5NNe3NhyPnjZQz00jvCvlCFDOSsGD7yQr3LDKyQXMn5xBVMF9r\nOHOIAe+J0CYAj4Fl/Lgkq3ZpVre2PpsjMMOeJS6GMQKBgQDnmOIth5mbvJvmc3sD\nTcNeRfD2q2/ySWVkmdV2x7Nk5qqHyK/eB60m0r6ghisPEExz+mXckV9UCcNH8rsW\n2Rm1cpvYsQoS9+Tnh/9a7dVFKqbHBRsmDSn5olZhReTa3kzQX9m4iJkF15D0RZpL\nLMLC57OG5whtkgQF+RYj04MVxQKBgQDbJb6mRy9D+ybrfTVzUbsNoNJfoISco1h/\nGDZbERlMU91J7aJTtBXPXGL4gmeqQAsWnxfJYY8T0HGjxgOT75C8ODm8qRk6epr7\nNnrUpLH/jYwaqBtsrcdURSeXJE/BcRFhPGV+l/DnpNa3j9jWk9BnBDzkfjv9JDcZ\n+/A08FMYSwKBgQCpaKDR0yXe0Kltej2aXhCx7hFkLmV14pBjdU+7Ujr8bOqC5p8W\nl6DmDDRa8amfnDmAgMJwBHqp23ZYM8r83JO8sXgkmuQWmfR8FHQKzHw72wYiAK8q\nN2jj7QaootrT6tZfei2lmW3t4xBqTlud78ELlzcwT+FPXQbKY7j5PefeTQKBgHzu\nMpZ2RFK77b8X3Q3FzR4CzYtoZdEqKbwioHIf+E0UDjYj+4M+SaSx5VYIeXKMGgYm\nYhgSvs8r6GzV6JpAW0GByCBuQgydcpa9wx5QWYz3M6TKqv+0vcqjteMq9zCu9Zp6\nJN4bXmGgDiwNHC+PiqH/v3r/H9G7AJKWlqSHUMerAoGBAKGzrNLpJv8jLC10b9mP\nxhoEN3wWiX1MY24ty4xtvH3pgEU02GPw/bHnp+0WEJxLZtMAwO6pigXjJe0q6/qt\naQGVLfYwBTrdDYBufC96qaGjzA461BLYuq5D1K2rTE3eplfL7tPiSEZX2qh9o9Pl\n1E/Qn1AVPJnWiOibk21Yglt1\n-----END PRIVATE KEY-----\n",
+    "client_email": "upload-post-photos@portfolio-368218.iam.gserviceaccount.com",
+    "client_id": "115394745962911632001",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/upload-post-photos%40portfolio-368218.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  

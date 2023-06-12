@@ -93,6 +93,10 @@ a:active {
   color: var(--main-blue);
 }
 
+ol {
+  font-family: var(--font);
+}
+
 .logo {
   height: 3.5rem;
   width: auto;
