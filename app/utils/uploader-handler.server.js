@@ -4,14 +4,8 @@ import { env } from "process";
 import { Readable } from "stream";
 
 const uploadStreamToCloudStorage = async (data, filename) => {
-  debug();
+  // Convert from AsyncIterable to something Storage can handle
   const readable = Readable.from(data);
-  // if (name !== "post-img") {
-  //   stream.resume();
-  //   return;
-  // } else {
-  //   console.log(name, fileName);
-  // }
 
   console.log("In file handler");
   const bucketName = "portfolio-resources";

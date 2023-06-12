@@ -1,6 +1,8 @@
 import {
   json,
+  redirect,
   unstable_composeUploadHandlers,
+  unstable_createMemoryUploadHandler,
   unstable_parseMultipartFormData,
 } from "@remix-run/node";
 import { getProject } from "../utils/db.server";
@@ -22,33 +24,32 @@ export async function loader({ params }) {
 }
 
 export async function action({ request }) {
-  debug();
   const uploadHandler = unstable_composeUploadHandlers(
     async ({ name, data, filename }) => {
       if (name !== "post-img") {
-        return data;
+        return undefined;
       }
       const uploadedImage = await cloudStorageUploaderHandler(data, filename);
       return uploadedImage;
-    }
+    },
+    unstable_createMemoryUploadHandler() // Uses this if it's not an image
   );
   const formData = await unstable_parseMultipartFormData(
     request,
     uploadHandler
   );
-  console.log({ formData });
-  const objForm = Object.fromEntries(formData);
-  const fileName = formData.get("post-img");
+
+  const img = formData.get("post-img");
   const id = formData.get("id");
   const category = formData.get("category");
   const title = formData.get("title");
   const slug = formData.get("slug");
   const alt = formData.get("alt");
   const writeup = formData.get("writeup");
-  console.log(fileName);
+
   // TODO: We got it uploading to GCS, but the image is all weird looking...
   // TODO: then, we get to put everything into MongoDB
-  return { fileName };
+  return { img };
 }
 
 export default function AdminEdit() {
@@ -57,15 +58,14 @@ export default function AdminEdit() {
 
   const actionData = useActionData();
 
-  if (actionData && actionData.fileName) {
-    return <>Upload successful.</>;
+  if (actionData && actionData.img) {
+    redirect("/admin");
   }
 
   const childToParent = (childData) => {
     setData(childData);
   };
-  const fileName =
-    actionData?.fileName != undefined ? actionData.fileName : project.img;
+  const fileName = actionData?.img != undefined ? actionData.img : project.img;
 
   const title = project?.title;
 
