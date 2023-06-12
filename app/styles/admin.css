@@ -252,3 +252,26 @@ select:focus + .focus {
 #linkInput #confirmBtn {
   background-color: #18af5e;
 }
+
+.new-project {
+  background-color: var(--main-blue);
+  border: none;
+  width: 10rem;
+  text-align: center;
+  padding: 1rem 1rem;
+  margin-right: 1rem;
+  color: white;
+  font-size: 1.25rem;
+  font-family: var(--font-header);
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 1rem 5rem;
+  display: block;
+}
+
+.post-field,
+.post-field input {
+  font-family: var(--font);
+  font-size: 1rem;
+  width: 50ch;
+}

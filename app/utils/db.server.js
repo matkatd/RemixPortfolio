@@ -23,3 +23,38 @@ export async function getProject(slug) {
 export async function getPhotos() {
   return prisma.photography.findMany();
 }
+
+export async function createPost(post) {
+  const date = new Date();
+  let currentDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  prisma.projects.create({
+    data: {
+      category: post.category,
+      title: post.title,
+      date: currentDate,
+      slug: post.slug,
+      img: post.img,
+      alt: post.alt,
+      writeup: post.writeup
+    }
+  })
+}
+
+export async function updatePost(post, id) {
+  const date = new Date();
+  let currentDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  prisma.projects.update({
+    where: {
+      id: id
+    },
+    data: {
+      category: post.category,
+      title: post.title,
+      date: currentDate,
+      slug: post.slug,
+      img: post.img,
+      alt: post.alt,
+      writeup: post.writeup
+    }
+  })
+}

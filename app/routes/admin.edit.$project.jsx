@@ -1,8 +1,15 @@
-import { json } from "@remix-run/node";
+import {
+  json,
+  unstable_composeUploadHandlers,
+  unstable_parseMultipartFormData,
+} from "@remix-run/node";
 import { getProject } from "../utils/db.server";
 import Tiptap from "./components/Tiptap";
-import { Form, useLoaderData, useSubmit } from "@remix-run/react";
+import { cloudStorageUploaderHandler } from "../utils/uploader-handler.server";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
+import { prisma } from "../utils/prisma.server";
+import { debug } from "../utils/debug";
 
 export async function loader({ params }) {
   const project = await getProject(params.project);
@@ -15,25 +22,57 @@ export async function loader({ params }) {
 }
 
 export async function action({ request }) {
-  const formData = await request.formData();
-  const values = Object.fromEntries(formData);
-  // TODO: Next up is uploading the main image to GCP
+  debug();
+  const uploadHandler = unstable_composeUploadHandlers(
+    async ({ name, data, filename }) => {
+      if (name !== "post-img") {
+        return data;
+      }
+      const uploadedImage = await cloudStorageUploaderHandler(data, filename);
+      return uploadedImage;
+    }
+  );
+  const formData = await unstable_parseMultipartFormData(
+    request,
+    uploadHandler
+  );
+  console.log({ formData });
+  const objForm = Object.fromEntries(formData);
+  const fileName = formData.get("post-img");
+  const id = formData.get("id");
+  const category = formData.get("category");
+  const title = formData.get("title");
+  const slug = formData.get("slug");
+  const alt = formData.get("alt");
+  const writeup = formData.get("writeup");
+  console.log(fileName);
+  // TODO: We got it uploading to GCS, but the image is all weird looking...
   // TODO: then, we get to put everything into MongoDB
-  return {};
+  return { fileName };
 }
 
 export default function AdminEdit() {
   const project = useLoaderData();
   const [data, setData] = useState("");
 
+  const actionData = useActionData();
+
+  if (actionData && actionData.fileName) {
+    return <>Upload successful.</>;
+  }
+
   const childToParent = (childData) => {
     setData(childData);
   };
-  const title = project.title;
+  const fileName =
+    actionData?.fileName != undefined ? actionData.fileName : project.img;
+
+  const title = project?.title;
 
   return (
     <>
-      <Form method="post" reloadDocument>
+      <Form method="post" encType="multipart/form-data">
+        <input type="hidden" name="id" value={project?.id}></input>
         <div className="category-dropdown">
           <label htmlFor="category">Choose Category</label>
           <br />
@@ -53,12 +92,29 @@ export default function AdminEdit() {
           <input type="text" id="title" name="title" defaultValue={title} />
         </div>
         <br />
-        <label className="image-upload" htmlFor="img">
+        <div className="post-field">
+          <label htmlFor="slug">URL Slug</label>
+          <br />
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            defaultValue={project?.slug}
+          />
+        </div>
+        <br />
+        <label className="image-upload" htmlFor="post-img">
           Upload an Image
         </label>
-        <input type="file" id="img" name="img" accept="image/*" />
+        <input type="file" id="img" name="post-img" accept="image/*" />
         <br />
-        <img src={project.img} alt={project.alt} className="edit-image" />
+        <img src={fileName} alt={project?.alt} className="edit-image" />
+        <div className="post-field">
+          <label htmlFor="alt">Image Alt Image</label>
+          <br />
+          <input type="text" id="alt" name="alt" defaultValue={project?.alt} />
+        </div>
+        <br />
         <input type="hidden" value={data} name="writeup"></input>
 
         <button className="submit" type="submit">

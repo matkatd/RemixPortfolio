@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { getAllProjects } from "../utils/db.server";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import CardList from "./components/CardList";
 
 export async function loader() {
@@ -17,6 +17,9 @@ export default function AdminIndex() {
 
   return (
     <div>
+      <Link className="new-project" to={"/admin/new"}>
+        New Project
+      </Link>
       <CardList data={data} admin={true} />
     </div>
   );
