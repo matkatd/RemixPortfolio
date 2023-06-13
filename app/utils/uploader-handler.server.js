@@ -2,6 +2,10 @@ import { Storage } from "@google-cloud/storage";
 import { debug } from "./debug";
 import { env } from "process";
 import { Readable } from "stream";
+import {
+  unstable_composeUploadHandlers,
+  unstable_createMemoryUploadHandler,
+} from "@remix-run/node";
 
 const uploadStreamToCloudStorage = async (data, filename) => {
   // Convert from AsyncIterable to something Storage can handle
@@ -32,18 +36,30 @@ const uploadStreamToCloudStorage = async (data, filename) => {
   const file = bucket.file(filename);
 
   async function streamFileUpload() {
-    readable.pipe(file.createWriteStream()).on("finish", () => {
-      // The file upload is complete
-    });
+    readable
+      .pipe(file.createWriteStream({ resumable: false }))
+      .on("finish", () => {
+        // The file upload is complete
+      });
 
     console.log(`${filename} uploaded to ${bucketName}`);
   }
 
   streamFileUpload().catch(console.error);
-
-  return `https://storage.googleapis.com/portfolio-resources/${filename}`;
+  file.return`https://storage.googleapis.com/portfolio-resources/${filename}`;
 };
 
 export const cloudStorageUploaderHandler = async (data, filename) => {
   return await uploadStreamToCloudStorage(data, filename);
 };
+
+export const uploadHandler = unstable_composeUploadHandlers(
+  async ({ name, data, filename }) => {
+    if (name !== "post-img") {
+      return undefined;
+    }
+    const uploadedImage = await cloudStorageUploaderHandler(data, filename);
+    return uploadedImage;
+  },
+  unstable_createMemoryUploadHandler() // Uses this if it's not an image
+);
