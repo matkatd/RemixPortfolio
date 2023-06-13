@@ -1,16 +1,11 @@
 import ProjectCard from "~/routes/components/ProjectCard.jsx";
-import AdminCard from "./AdminCard";
 
-function CardList({ data, admin }) {
+function CardList({ data }) {
   return (
     <div id="card-grid">
-      {data?.map((project) => {
-        return !admin ? (
-          <ProjectCard project={project} key={project?.slug} />
-        ) : (
-          <AdminCard project={project} key={project?.slug} />
-        );
-      })}
+      {data?.map((project) => (
+        <ProjectCard project={project} key={project?.slug} />
+      ))}
     </div>
   );
 }

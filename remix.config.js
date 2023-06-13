@@ -16,7 +16,5 @@ module.exports = {
     "yet-another-react-lightbox",
     "yet-another-react-lightbox/plugins/zoom",
     "yet-another-react-lightbox/plugins/thumbnails",
-    "lodash-es",
-    "lodash"
   ],
 };
