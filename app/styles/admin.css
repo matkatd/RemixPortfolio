@@ -4,6 +4,7 @@
   --select-border: #777;
   --select-focus: blue;
   --select-arrow: var(--select-border);
+  --blue-button-hover: rgb(42, 101, 197);
 }
 
 *,
@@ -134,6 +135,7 @@ select::-ms-expand {
   align-items: center;
   position: relative;
   margin: 5px 0;
+  height: 1.75rem;
 }
 
 select,
@@ -186,7 +188,7 @@ select:focus + .focus {
 }
 
 #img::-webkit-file-upload-button:hover {
-  background-color: rgb(42, 101, 197);
+  background-color: var(--blue-button-hover);
 }
 
 #img {
@@ -274,4 +276,12 @@ select:focus + .focus {
   font-family: var(--font);
   font-size: 1rem;
   width: 50ch;
+}
+
+.submit:hover {
+  background-color: var(--blue-button-hover);
+}
+
+.submit:active {
+  background-color: rgb(29, 87, 189);
 }

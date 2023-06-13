@@ -35,17 +35,17 @@ export async function createPost(post) {
       slug: post.slug,
       img: post.img,
       alt: post.alt,
-      writeup: post.writeup
-    }
-  })
+      writeup: post.writeup,
+    },
+  });
 }
 
-export async function updatePost(post, id) {
+export async function updatePost(post) {
   const date = new Date();
   let currentDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
   prisma.projects.update({
     where: {
-      id: id
+      id: post.id,
     },
     data: {
       category: post.category,
@@ -54,7 +54,7 @@ export async function updatePost(post, id) {
       slug: post.slug,
       img: post.img,
       alt: post.alt,
-      writeup: post.writeup
-    }
-  })
+      writeup: post.writeup,
+    },
+  });
 }

@@ -73,13 +73,14 @@ export default function AdminEdit() {
 
   return (
     <>
-      <Form method="post" encType="multipart/form-data">
+      <Form method="post" encType="multipart/form-data" name="edit-post">
         <input type="hidden" name="id" value={project?.id}></input>
         <div className="category-dropdown">
           <label htmlFor="category">Choose Category</label>
           <br />
           <div className="select">
             <select name="category" id="category">
+              <option>Please select an option:</option>
               <option value="wdd">Web Design & Development</option>
               <option value="software_engineering">Software Engineering</option>
               <option value="other">Other</option>
@@ -118,12 +119,12 @@ export default function AdminEdit() {
         </div>
         <br />
         <input type="hidden" value={data} name="writeup"></input>
-
-        <button className="submit" type="submit">
-          Create
-        </button>
       </Form>
       <Tiptap project={project} childToParent={childToParent} />
+
+      <button className="submit" type="submit" form="edit-form">
+        Create
+      </button>
     </>
   );
 }
