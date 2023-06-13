@@ -93,6 +93,10 @@ a:active {
   color: var(--main-blue);
 }
 
+ol {
+  font-family: var(--font);
+}
+
 .logo {
   height: 3.5rem;
   width: auto;
@@ -466,6 +470,10 @@ main.img-page {
 .linked-button:hover {
   background-color: #386da6;
   transition: all 0.3s ease-in-out;
+}
+
+.react-photo-album img {
+  border-radius: 15px;
 }
 
 @media only screen and (max-width: 675px) {

@@ -1,7 +1,14 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "remix.env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/utils/uploader-handler.server.ts",
+    "app/utils/uploader-handler.server.ts"
+  ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "module": "ES2022",
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",

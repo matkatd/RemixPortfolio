@@ -1,6 +1,5 @@
-# Welcome to Remix!
+# Welcome to My Portfolio!
 
-- [Remix Docs](https://remix.run/docs)
 
 ## Development
 

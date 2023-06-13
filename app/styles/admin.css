@@ -1,8 +1,15 @@
 :root {
-  --admin-color: white;
-  --login-background: rgb(207, 236, 248);
-  --main-blue: #3083dc;
-  --nav-color: #f7cb5c;
+  --admin-color: rgb(219, 242, 251);
+  --login-background: rgba(104, 191, 241, 0.869);
+  --select-border: #777;
+  --select-focus: blue;
+  --select-arrow: var(--select-border);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -52,4 +59,219 @@ main {
   font-family: lato-bold;
   color: black;
   font-size: 0.75rem;
+}
+
+.ltr {
+  text-align: left;
+}
+
+.rtl {
+  text-align: right;
+}
+
+.editor-placeholder {
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.editor-paragraph {
+  margin: 0 0 15px 0;
+  position: relative;
+}
+
+.delete {
+  background-color: rgb(187, 26, 12);
+}
+
+.category-dropdown {
+  font-family: var(--font-header);
+  font-size: 1.25rem;
+  margin: 5px;
+}
+
+/* Source for custom dropdown: https://moderncss.dev/custom-select-styles-with-pure-css/ */
+
+select {
+  /* A reset of styles, including removing the default dropdown arrow */
+  appearance: none;
+  /* Additional resets for further consistency */
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+.select {
+  font-family: var(--font);
+  width: 100%;
+  min-width: 15ch;
+  max-width: 30ch;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  display: grid;
+  grid-template-areas: "select";
+  align-items: center;
+  position: relative;
+  margin: 5px 0;
+}
+
+select,
+.select:after {
+  grid-area: select;
+}
+
+.select::after {
+  content: "";
+  width: 0.8em;
+  height: 0.5em;
+  background-color: var(--select-arrow);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  justify-self: end;
+}
+
+select:focus + .focus {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 2px solid var(--select-focus);
+  border-radius: inherit;
+}
+
+.post-title {
+  font-family: var(--font-header);
+  font-size: 1.25rem;
+}
+
+.post-title input {
+  font-family: var(--font);
+  font-size: 1rem;
+  margin: 10px 0;
+  border-radius: 0.25em;
+  border: 1px solid var(--select-border);
+  padding: 0.25em 0.5em;
+}
+
+#img::-webkit-file-upload-button {
+  background-color: var(--main-blue);
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  color: white;
+  font-size: 1rem;
+  font-family: var(--font-header);
+  border-radius: 5px;
+}
+
+#img::-webkit-file-upload-button:hover {
+  background-color: rgb(42, 101, 197);
+}
+
+#img {
+  font-size: 0.75rem;
+  font-family: var(--font);
+}
+
+.image-upload {
+  font-family: var(--font-header);
+  font-size: 1.25rem;
+  padding-right: 1rem;
+}
+
+.edit-image {
+  width: 70vw;
+  min-width: 200px;
+  border-radius: 15px;
+  padding: 10px 0;
+}
+
+.submit {
+  background-color: var(--main-blue);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  font-size: 1rem;
+  font-family: var(--font-header);
+  border-radius: 5px;
+}
+
+#linkInput {
+  /* position: absolute;
+  top: 1000px; */
+  z-index: 100;
+}
+
+#linkInput label {
+  font-family: var(--font);
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+#linkInput input {
+  font-family: var(--font);
+  font-size: 1rem;
+}
+
+#linkInput button {
+  background-color: var(--main-blue);
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  color: white;
+  font-size: 1rem;
+  font-family: var(--font-header);
+  border-radius: 5px;
+}
+
+#linkInput #remove {
+  background-color: rgb(192, 30, 30);
+}
+
+#linkInput #confirmBtn {
+  background-color: #18af5e;
+}
+
+.new-project {
+  background-color: var(--main-blue);
+  border: none;
+  width: 10rem;
+  text-align: center;
+  padding: 1rem 1rem;
+  margin-right: 1rem;
+  color: white;
+  font-size: 1.25rem;
+  font-family: var(--font-header);
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 1rem 5rem;
+  display: block;
+}
+
+.post-field,
+.post-field input {
+  font-family: var(--font);
+  font-size: 1rem;
+  width: 50ch;
 }
