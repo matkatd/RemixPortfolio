@@ -25,6 +25,7 @@ const validator = withYup(
     slug: yup.string().label("URL slug").required(),
     img: yup.string().label("Main image for Post").required(),
     alt: yup.string().label("Alt text for image").required(),
+    writeup: yup.string().required(),
   })
 );
 
@@ -35,7 +36,7 @@ export const action = async ({ request }) => {
   );
   const fieldValues = await validator.validate(formData);
   if (fieldValues.error) return validationError(fieldValues.error);
-  // createPost(fieldValues.data);
+  createPost(fieldValues.data);
   return redirect("/admin");
 };
 
