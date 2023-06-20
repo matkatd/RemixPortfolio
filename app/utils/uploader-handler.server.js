@@ -46,7 +46,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
   }
 
   streamFileUpload().catch(console.error);
-  file.return`https://storage.googleapis.com/portfolio-resources/${filename}`;
+  return `https://storage.googleapis.com/portfolio-resources/${filename}`;
 };
 
 export const cloudStorageUploaderHandler = async (data, filename) => {
@@ -55,7 +55,7 @@ export const cloudStorageUploaderHandler = async (data, filename) => {
 
 export const uploadHandler = unstable_composeUploadHandlers(
   async ({ name, data, filename }) => {
-    if (name !== "post-img") {
+    if (name !== "img") {
       return undefined;
     }
     const uploadedImage = await cloudStorageUploaderHandler(data, filename);

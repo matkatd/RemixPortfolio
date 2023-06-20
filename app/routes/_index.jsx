@@ -25,7 +25,3 @@ export default function Index() {
     </main>
   );
 }
-
-// export function links() {
-//   return [{ rel: 'stylesheet', href: }]
-// }
