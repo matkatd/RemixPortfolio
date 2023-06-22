@@ -5,7 +5,8 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { ListItem } from "@tiptap/extension-list-item";
-
+import Dropcursor from "@tiptap/extension-dropcursor";
+import Image from "@tiptap/extension-image";
 import ToolBar from "./ToolBar";
 import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
@@ -26,6 +27,8 @@ const Tiptap = ({ project, childToParent }) => {
           keepMarks: true,
           keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
         },
+        Image,
+        Dropcursor,
       }),
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       TextStyle.configure({ types: [ListItem.name] }),
@@ -33,7 +36,7 @@ const Tiptap = ({ project, childToParent }) => {
         types: ["heading", "paragraph"],
       }),
       Link.configure({
-        protocols: ["ftp", "mailto"],
+        protocols: ["mailto"],
       }),
     ],
     content: starterContent,

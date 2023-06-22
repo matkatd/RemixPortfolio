@@ -11,15 +11,24 @@ import {
   ValidatedForm,
   useIsSubmitting,
 } from "remix-validated-form";
+import { useState } from "react";
 import { uploadHandler } from "../utils/uploader-handler.server";
 import { createPost } from "../utils/db.server";
-import FormInput from "./components/FormInput";
-import { useState } from "react";
+
 import Tiptap from "./components/Tiptap";
+import FormInput from "./components/FormInput";
 import FormSelect from "./components/FormSelect";
+
+const options = [
+  { value: "", label: "--Choose a Category--" },
+  { value: "wdd", label: "Web Design & Development" },
+  { value: "software_engineering", label: "Software Engineering" },
+  { value: "other", label: "Other" },
+];
 
 const validator = withYup(
   yup.object({
+    id: yup.string().required(),
     title: yup.string().label("Post Title").required(),
     category: yup.string().label("Post Category").required(),
     slug: yup.string().label("URL slug").required(),
@@ -52,7 +61,7 @@ export const loader = async (args) => {
   });
 };
 
-export default function AdminEdit() {
+export default function AdminNew() {
   const { placeholder } = useLoaderData();
   const [data, setData] = useState("");
 
@@ -75,12 +84,12 @@ export default function AdminEdit() {
           label="Post Title"
           placeholder={placeholder.title}
         />
-        <FormSelect name="category">
-          <option>--Choose a Category--</option>
-          <option value="wdd">Web Design & Development</option>
-          <option value="software_engineering">Software Engineering</option>
-          <option value="other">Other</option>
-        </FormSelect>
+        <FormSelect
+          name="category"
+          label="Choose a Category"
+          options={options}
+          selected={{ value: "", label: "--Choose a Category--" }}
+        />
         <FormInput
           name="slug"
           label="URL Slug"

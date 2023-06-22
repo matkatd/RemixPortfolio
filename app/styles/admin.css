@@ -95,12 +95,12 @@ main {
   margin: 5px;
 }
 
-/* Source for custom dropdown: https://moderncss.dev/custom-select-styles-with-pure-css/ */
+/* Source for custom dropdown: https://moderncss.dev/custom-select-styles-with-pure-css/
 
 select {
-  /* A reset of styles, including removing the default dropdown arrow */
+
   appearance: none;
-  /* Additional resets for further consistency */
+
   background-color: transparent;
   border: none;
   padding: 0 1em 0 0;
@@ -116,42 +116,25 @@ select {
 select::-ms-expand {
   display: none;
 }
-
+*/
 .select {
   font-family: var(--font);
   width: 100%;
   min-width: 15ch;
   max-width: 30ch;
-  border: 1px solid var(--select-border);
-  border-radius: 0.25em;
-  padding: 0.25em 0.5em;
+
   font-size: 1rem;
   cursor: pointer;
-  line-height: 1.1;
-  background-color: #fff;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-  display: grid;
-  grid-template-areas: "select";
-  align-items: center;
-  position: relative;
-  margin: 5px 0;
-  height: 1.75rem;
-}
 
+  /* height: 1.75rem; */
+}
+/*
 select,
 .select:after {
   grid-area: select;
 }
-
-.select::after {
-  content: "";
-  width: 0.8em;
-  height: 0.5em;
-  background-color: var(--select-arrow);
-  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-  justify-self: end;
-}
-
+*/
+/*
 select:focus + .focus {
   position: absolute;
   top: -1px;
@@ -160,11 +143,12 @@ select:focus + .focus {
   bottom: -1px;
   border: 2px solid var(--select-focus);
   border-radius: inherit;
-}
+} */
 
 .post-title {
   font-family: var(--font-header);
   font-size: 1.25rem;
+  width: 30ch;
 }
 
 .post-title input {
@@ -174,6 +158,7 @@ select:focus + .focus {
   border-radius: 0.25em;
   border: 1px solid var(--select-border);
   padding: 0.25em 0.5em;
+  width: 45ch;
 }
 
 #img::-webkit-file-upload-button {
@@ -219,24 +204,24 @@ select:focus + .focus {
   border-radius: 5px;
 }
 
-#linkInput {
+.inputDialog {
   /* position: absolute;
   top: 1000px; */
   z-index: 100;
 }
 
-#linkInput label {
+.inputDialog label {
   font-family: var(--font);
   font-size: 1rem;
   margin-right: 1rem;
 }
 
-#linkInput input {
+.inputDialog input {
   font-family: var(--font);
   font-size: 1rem;
 }
 
-#linkInput button {
+.inputDialog button {
   background-color: var(--main-blue);
   border: none;
   padding: 0.5rem 1rem;
@@ -247,11 +232,11 @@ select:focus + .focus {
   border-radius: 5px;
 }
 
-#linkInput #remove {
+.inputDialog .remove-button {
   background-color: rgb(192, 30, 30);
 }
 
-#linkInput #confirmBtn {
+.inputDialog .confirm-button {
   background-color: #18af5e;
 }
 
@@ -284,4 +269,16 @@ select:focus + .focus {
 
 .submit:active {
   background-color: rgb(29, 87, 189);
+}
+
+.error-class {
+  color: #bb1a0c;
+  font-size: 1rem;
+  padding: 1rem;
+  border: solid;
+  border-radius: 10px;
+  margin: 5px;
+  text-align: center;
+  display: block;
+  background: #ffdbdb;
 }

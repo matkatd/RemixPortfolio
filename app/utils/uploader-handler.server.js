@@ -1,13 +1,16 @@
 import { Storage } from "@google-cloud/storage";
-import { debug } from "./debug";
 import { env } from "process";
 import { Readable } from "stream";
 import {
   unstable_composeUploadHandlers,
   unstable_createMemoryUploadHandler,
 } from "@remix-run/node";
+import { PassThrough } from "node:stream";
 
 const uploadStreamToCloudStorage = async (data, filename) => {
+  if (filename === "") {
+    return "";
+  }
   // Convert from AsyncIterable to something Storage can handle
   const readable = Readable.from(data);
 
@@ -33,6 +36,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
 
   // Create a reference to the file.
   const bucket = cloudStorage.bucket(bucketName);
+
   const file = bucket.file(filename);
 
   async function streamFileUpload() {

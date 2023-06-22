@@ -1,15 +1,17 @@
 import { useCallback, useEffect } from "react";
-
+import { cloudStorageUploaderHandler } from "../../utils/uploader-handler.server";
+import { v4 as uuidv4 } from "uuid";
 function ToolBar({ editor }) {
   let showButton;
   let favDialog;
-  let selectEl;
+  let srcEl;
+  let altEl;
   let confirmBtn;
   let removeBtn;
   useEffect(() => {
     showButton = window.document.getElementById("showDialog");
     favDialog = window.document.getElementById("linkInput");
-    selectEl = window.document.querySelector("#href");
+    srcEl = window.document.querySelector("#href");
     confirmBtn = window.document.querySelector("#confirmBtn");
     removeBtn = window.document.getElementById("remove");
     // "Show the dialog" button opens the <dialog> modally
@@ -18,12 +20,12 @@ function ToolBar({ editor }) {
       if (previousUrl === undefined) {
         previousUrl = "";
       }
-      selectEl.value = previousUrl;
+      srcEl.value = previousUrl;
       favDialog.showModal();
     });
 
-    selectEl?.addEventListener("change", (e) => {
-      confirmBtn.value = selectEl.value;
+    srcEl?.addEventListener("change", (e) => {
+      confirmBtn.value = srcEl.value;
     });
 
     removeBtn?.addEventListener("click", () => {
@@ -51,7 +53,63 @@ function ToolBar({ editor }) {
     // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
     confirmBtn?.addEventListener("click", (event) => {
       event.preventDefault(); // We don't want to submit this fake form
-      favDialog.close(selectEl.value); // Have to send the select box value here.
+      favDialog.close(srcEl.value); // Have to send the select box value here.
+    });
+  }, [editor]);
+
+  // For Image
+  useEffect(() => {
+    showButton = window.document.getElementById("showImgDialog");
+    favDialog = window.document.getElementById("imageInput");
+    srcEl = window.document.querySelector("#src");
+    altEl = window.document.querySelector("#alt");
+    confirmBtn = window.document.querySelector("#confirmBtn");
+    // "Show the dialog" button opens the <dialog> modally
+    showButton?.addEventListener("click", () => {
+      let previousSrc = editor.getAttributes("image").src;
+      let previousAlt = editor.getAttributes("image").alt;
+      if (previousSrc === undefined) {
+        previousSrc = "";
+      }
+      if (previousAlt === undefined) {
+        previousAlt = "";
+      }
+      srcEl.value = previousSrc;
+      altEl.value = previousAlt;
+      favDialog.showModal();
+    });
+
+    srcEl?.addEventListener("change", (e) => {
+      // TODO: Test to make sure this works
+      const file = srcEl.files[0];
+      const newSrc = cloudStorageUploaderHandler(file, file.name);
+      confirmBtn.value.src = newSrc;
+    });
+    altEl?.addEventListener("change", (e) => {
+      confirmBtn.value.alt = altEl.value;
+    });
+
+    // "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
+    favDialog?.addEventListener("close", (e) => {
+      if (favDialog.returnValue === "cancel") {
+        return;
+      } else {
+        editor
+          .chain()
+          .focus()
+          .setImage({
+            src: favDialog.returnValue.src,
+            alt: favDialog.returnValue.alt,
+          })
+          .run();
+      }
+    });
+
+    // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
+    confirmBtn?.addEventListener("click", (event) => {
+      event.preventDefault(); // We don't want to submit this fake form
+      let obj = { src: srcEl.value, alt: altEl.value };
+      favDialog.close(obj); // Have to send the select box value here.
     });
   }, [editor]);
 
@@ -89,7 +147,8 @@ function ToolBar({ editor }) {
         className={editor.isActive("code") ? "is-active " : ""}>
         <i className="ri-code-s-slash-line"></i>
       </button>
-      <dialog id="linkInput">
+
+      <dialog id="linkInput" className="inputDialog">
         <form className="get-link-url">
           <button id="cancel" value="cancel" formMethod="dialog">
             Cancel
@@ -97,10 +156,14 @@ function ToolBar({ editor }) {
           <label htmlFor="href">Enter URL for Link</label>
           <input type="text" id="href" name="href"></input>
           <div className="dialog-buttons">
-            <button id="remove" value="remove" formMethod="dialog">
+            <button
+              id="remove"
+              className="remove-button"
+              value="remove"
+              formMethod="dialog">
               Remove Link
             </button>
-            <button id="confirmBtn" value="default">
+            <button id="confirmBtn" className="confirm-button" value="default">
               Confirm
             </button>
           </div>
@@ -173,6 +236,37 @@ function ToolBar({ editor }) {
         <i className="ri-h-6"></i>
       </button>
       <br />
+
+      <dialog id="imageInput" className="inputDialog">
+        <form className="get-image">
+          <button
+            id="cancelImg"
+            value="cancel"
+            className="cancel-button"
+            formMethod="dialog">
+            Cancel
+          </button>
+          <label htmlFor="src">Upload image</label>
+          <input
+            type="file"
+            accept="image/*"
+            className="image-upload"
+            id="src"
+            name="src"></input>
+          <br />
+          <label htmlFor="alt">Image Alt Text</label>
+          <input type="text" id="alt" name="alt" />
+          <div className="dialog-buttons">
+            <button id="confirmImg" className="confirm-button" value="default">
+              Confirm
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <button id="showImgDialog" title="Insert Image">
+        <i className="ri-image-add-line"></i>
+      </button>
+
       <button
         title="Bulleted List"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
