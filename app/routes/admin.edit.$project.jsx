@@ -1,17 +1,58 @@
 import {
   json,
   redirect,
-  unstable_composeUploadHandlers,
-  unstable_createMemoryUploadHandler,
   unstable_parseMultipartFormData,
 } from "@remix-run/node";
-import { getProject, updatePost } from "../utils/db.server";
-import Tiptap from "./components/Tiptap";
-import { cloudStorageUploaderHandler } from "../utils/uploader-handler.server";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
+import * as yup from "yup";
+import { withYup } from "@remix-validated-form/with-yup";
+import {
+  validationError,
+  ValidatedForm,
+  useIsSubmitting,
+} from "remix-validated-form";
 import { useState } from "react";
-import { prisma } from "../utils/prisma.server";
-import { debug } from "../utils/debug";
+import { uploadHandler } from "../utils/uploader-handler.server";
+import { getProject, updatePost } from "../utils/db.server";
+
+import Tiptap from "./components/Tiptap";
+import FormInput from "./components/FormInput";
+import FormSelect from "./components/FormSelect";
+
+const options = [
+  { value: "", label: "--Choose a Category--" },
+  { value: "wdd", label: "Web Design & Development" },
+  { value: "software_engineering", label: "Software Engineering" },
+  { value: "other", label: "Other" },
+];
+
+const validator = withYup(
+  yup.object({
+    id: yup.string().required(),
+    title: yup.string().label("Post Title").required(),
+    category: yup.string().label("Post Category").required(),
+    slug: yup.string().label("URL slug").required(),
+    img: yup.string().label("Main image for Post"),
+    alt: yup.string().label("Alt text for image").required(),
+    writeup: yup.string().required(),
+    originalImg: yup.string().required(),
+  })
+);
+
+export async function action({ request }) {
+  const formData = await unstable_parseMultipartFormData(
+    request,
+    uploadHandler
+  );
+
+  const fieldValues = await validator.validate(formData);
+  if (fieldValues.error) return validationError(fieldValues.error);
+  if (fieldValues.data.img === "") {
+    fieldValues.data.img = fieldValues.data.originalImg;
+  }
+  updatePost(fieldValues.data);
+  return redirect("/admin");
+}
 
 export async function loader({ params }) {
   const project = await getProject(params.project);
@@ -20,110 +61,66 @@ export async function loader({ params }) {
     throw new Response("Not Found", { status: 404 });
   }
 
-  return json(project);
-}
-
-export async function action({ request }) {
-  const uploadHandler = unstable_composeUploadHandlers(
-    async ({ name, data, filename }) => {
-      if (name !== "post-img") {
-        return undefined;
-      }
-      const uploadedImage = await cloudStorageUploaderHandler(data, filename);
-      return uploadedImage;
-    },
-    unstable_createMemoryUploadHandler() // Uses this if it's not an image
-  );
-  const formData = await unstable_parseMultipartFormData(
-    request,
-    uploadHandler
-  );
-
-  const img = formData.get("post-img");
-  const id = formData.get("id");
-  const category = formData.get("category");
-  const title = formData.get("title");
-  const slug = formData.get("slug");
-  const alt = formData.get("alt");
-  const writeup = formData.get("writeup");
-
-  updatePost({ img, id, category, title, slug, alt, writeup });
-
-  // TODO: We got it uploading to GCS, but the image is all weird looking...
-  // TODO: then, we get to put everything into MongoDB
-  return { img };
+  return json({ project });
 }
 
 export default function AdminEdit() {
-  const project = useLoaderData();
+  const { project } = useLoaderData();
   const [data, setData] = useState("");
-
-  const actionData = useActionData();
-
-  if (actionData && actionData.img) {
-    redirect("/admin");
-  }
 
   const childToParent = (childData) => {
     setData(childData);
   };
-  const fileName = actionData?.img != undefined ? actionData.img : project.img;
 
-  const title = project?.title;
+  const isSubmitting = useIsSubmitting("edit-post");
 
+  function findOptionIndex() {
+    const result = options.filter(
+      (option) => option.value === project.category
+    );
+    return result[0];
+  }
   return (
     <>
-      <Form method="post" encType="multipart/form-data" name="edit-post">
-        <input type="hidden" name="id" value={project?.id}></input>
-        <div className="category-dropdown">
-          <label htmlFor="category">Choose Category</label>
-          <br />
-          <div className="select">
-            <select name="category" id="category">
-              <option>Please select an option:</option>
-              <option value="wdd">Web Design & Development</option>
-              <option value="software_engineering">Software Engineering</option>
-              <option value="other">Other</option>
-            </select>
-            <span className="focus"></span>
-          </div>
-          <br />
-        </div>
-        <div className="post-title">
-          <label htmlFor="title">Name of Post</label>
-          <br />
-          <input type="text" id="title" name="title" defaultValue={title} />
-        </div>
-        <br />
-        <div className="post-field">
-          <label htmlFor="slug">URL Slug</label>
-          <br />
-          <input
-            type="text"
-            id="slug"
-            name="slug"
-            defaultValue={project?.slug}
-          />
-        </div>
-        <br />
-        <label className="image-upload" htmlFor="post-img">
-          Upload an Image
-        </label>
-        <input type="file" id="img" name="post-img" accept="image/*" />
-        <br />
-        <img src={fileName} alt={project?.alt} className="edit-image" />
-        <div className="post-field">
-          <label htmlFor="alt">Image Alt Image</label>
-          <br />
-          <input type="text" id="alt" name="alt" defaultValue={project?.alt} />
-        </div>
-        <br />
-        <input type="hidden" value={data} name="writeup"></input>
-      </Form>
+      <ValidatedForm
+        validator={validator}
+        method="post"
+        name="edit-post"
+        id="edit-post"
+        encType="multipart/form-data">
+        <FormInput name="id" value={project.id} type="hidden" />
+        <FormInput name="title" label="Post Title" value={project.title} />
+        <FormSelect
+          name="category"
+          label="Choose a Category"
+          options={options}
+          selected={findOptionIndex()}
+        />
+        <FormInput name="slug" label="URL Slug" value={project.slug} />
+        <img src={project.img} alt={project.alt} className="edit-image" />
+        <FormInput
+          name="img"
+          label="Upload an Image"
+          type="file"
+          accept="image/*"
+          className="image-upload"
+        />
+        <FormInput name="alt" label="Image alt text" value={project.alt} />
+        <FormInput name="originalImg" type="hidden" value={project.img} />
+        <FormInput
+          name="writeup"
+          label="Post Text"
+          type="hidden"
+          value={data !== "" ? data : project.writeup}
+        />
+      </ValidatedForm>
       <Tiptap project={project} childToParent={childToParent} />
-
-      <button className="submit" type="submit" form="edit-form">
-        Create
+      <button
+        form="edit-post"
+        type="submit"
+        disabled={isSubmitting}
+        className={isSubmitting ? "disabled-btn submit" : "submit"}>
+        {isSubmitting ? "Submitting..." : "Submit"}
       </button>
     </>
   );
