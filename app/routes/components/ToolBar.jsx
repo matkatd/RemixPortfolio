@@ -1,117 +1,108 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { cloudStorageUploaderHandler } from "../../utils/uploader-handler.server";
-import { v4 as uuidv4 } from "uuid";
+import { useSubmit } from "@remix-run/react";
+
+export async function action({ request }) {}
+
 function ToolBar({ editor }) {
-  let showButton;
-  let favDialog;
-  let srcEl;
-  let altEl;
-  let confirmBtn;
-  let removeBtn;
-  useEffect(() => {
-    showButton = window.document.getElementById("showDialog");
-    favDialog = window.document.getElementById("linkInput");
-    srcEl = window.document.querySelector("#href");
-    confirmBtn = window.document.querySelector("#confirmBtn");
-    removeBtn = window.document.getElementById("remove");
-    // "Show the dialog" button opens the <dialog> modally
-    showButton?.addEventListener("click", () => {
-      let previousUrl = editor.getAttributes("link").href;
-      if (previousUrl === undefined) {
-        previousUrl = "";
-      }
-      srcEl.value = previousUrl;
-      favDialog.showModal();
-    });
+  const submit = useSubmit();
 
-    srcEl?.addEventListener("change", (e) => {
-      confirmBtn.value = srcEl.value;
-    });
+  const showButton = useRef(null);
+  const showImageButton = useRef(null);
+  const linkDialog = useRef(null);
+  const imgDialog = useRef(null);
+  const hrefEl = useRef(null);
+  const srcEl = useRef(null);
+  const altEl = useRef(null);
+  const confirmBtn = useRef(null);
+  const confirmBtnImg = useRef(null);
+  const removeBtn = useRef(null);
 
-    removeBtn?.addEventListener("click", () => {
+  function handleLinkShowButton() {
+    let previousUrl = editor.getAttributes("link").href;
+    if (previousUrl === undefined) {
+      previousUrl = "";
+    }
+    hrefEl.current.value = previousUrl;
+    linkDialog.current.showModal();
+  }
+
+  function handleLinkTextInput() {
+    confirmBtn.current.value = hrefEl.current.value;
+  }
+
+  function handleRemoveLink() {
+    editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    linkDialog.current.returnValue = "";
+    linkDialog.current.close(linkDialog.current.returnValue);
+  }
+
+  function handleCloseLinkForm() {
+    if (linkDialog.current.returnValue === "") {
       editor.chain().focus().extendMarkRange("link").unsetLink().run();
-      favDialog.returnValue = "";
-      favDialog.close(favDialog.returnValue);
-    });
+    } else if (linkDialog.current.returnValue === "cancel") {
+      return;
+    } else {
+      editor
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .setLink({ href: linkDialog.current.returnValue })
+        .run();
+    }
+  }
 
-    // "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
-    favDialog?.addEventListener("close", (e) => {
-      if (favDialog.returnValue === "") {
-        editor.chain().focus().extendMarkRange("link").unsetLink().run();
-      } else if (favDialog.returnValue === "cancel") {
-        return;
-      } else {
-        editor
-          .chain()
-          .focus()
-          .extendMarkRange("link")
-          .setLink({ href: favDialog.returnValue })
-          .run();
-      }
-    });
+  function handleSubmitLink(event) {
+    submit(event.currentTar);
+    linkDialog.current.close(hrefEl.current.value); // Have to send the select box value here.
+  }
 
-    // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
-    confirmBtn?.addEventListener("click", (event) => {
-      event.preventDefault(); // We don't want to submit this fake form
-      favDialog.close(srcEl.value); // Have to send the select box value here.
-    });
-  }, [editor]);
+  function handleImgShowButton() {
+    let previousSrc = editor.getAttributes("image").src;
+    let previousAlt = editor.getAttributes("image").alt;
+    if (previousSrc === undefined) {
+      previousSrc = "";
+    }
+    if (previousAlt === undefined) {
+      previousAlt = "";
+    }
+    srcEl.current.value = previousSrc;
+    altEl.current.value = previousAlt;
+    imgDialog.current.showModal();
+  }
 
-  // For Image
-  useEffect(() => {
-    showButton = window.document.getElementById("showImgDialog");
-    favDialog = window.document.getElementById("imageInput");
-    srcEl = window.document.querySelector("#src");
-    altEl = window.document.querySelector("#alt");
-    confirmBtn = window.document.querySelector("#confirmBtn");
-    // "Show the dialog" button opens the <dialog> modally
-    showButton?.addEventListener("click", () => {
-      let previousSrc = editor.getAttributes("image").src;
-      let previousAlt = editor.getAttributes("image").alt;
-      if (previousSrc === undefined) {
-        previousSrc = "";
-      }
-      if (previousAlt === undefined) {
-        previousAlt = "";
-      }
-      srcEl.value = previousSrc;
-      altEl.value = previousAlt;
-      favDialog.showModal();
-    });
+  function handleImgSrcInput() {
+    // TODO: Figure out how to have this happen server side...
 
-    srcEl?.addEventListener("change", (e) => {
-      // TODO: Test to make sure this works
-      const file = srcEl.files[0];
-      const newSrc = cloudStorageUploaderHandler(file, file.name);
-      confirmBtn.value.src = newSrc;
-    });
-    altEl?.addEventListener("change", (e) => {
-      confirmBtn.value.alt = altEl.value;
-    });
+    // const newSrc = cloudStorageUploaderHandler(file, file.name);
+    confirmBtn.current.value.file = srcEl.current.files[0];
+  }
 
-    // "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
-    favDialog?.addEventListener("close", (e) => {
-      if (favDialog.returnValue === "cancel") {
-        return;
-      } else {
-        editor
-          .chain()
-          .focus()
-          .setImage({
-            src: favDialog.returnValue.src,
-            alt: favDialog.returnValue.alt,
-          })
-          .run();
-      }
-    });
+  function handleImgAltInput() {
+    confirmBtn.current.value.alt = altEl.value;
+  }
 
-    // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
-    confirmBtn?.addEventListener("click", (event) => {
-      event.preventDefault(); // We don't want to submit this fake form
-      let obj = { src: srcEl.value, alt: altEl.value };
-      favDialog.close(obj); // Have to send the select box value here.
-    });
-  }, [editor]);
+  function handleCloseImgForm() {
+    if (imgDialog.current.returnValue === "cancel") {
+      return;
+    } else {
+      editor
+        .chain()
+        .focus()
+        .setImage({
+          src: imgDialog.current.returnValue.src,
+          alt: imgDialog.current.returnValue.alt,
+        })
+        .run();
+    }
+  }
+
+  function handleSubmitImg(event) {
+    event.preventDefault(); // We don't want to submit this fake form
+
+    let obj = { src: srcEl.current.value, alt: altEl.current.value };
+    imgDialog.current.close(obj); // Have to send the select box value here.
+  }
 
   if (!editor) {
     return null;
@@ -148,22 +139,38 @@ function ToolBar({ editor }) {
         <i className="ri-code-s-slash-line"></i>
       </button>
 
-      <dialog id="linkInput" className="inputDialog">
+      <dialog
+        id="linkInput"
+        className="inputDialog"
+        ref={linkDialog}
+        onClose={handleCloseLinkForm}>
         <form className="get-link-url">
           <button id="cancel" value="cancel" formMethod="dialog">
             Cancel
           </button>
           <label htmlFor="href">Enter URL for Link</label>
-          <input type="text" id="href" name="href"></input>
+          <input
+            type="text"
+            id="href"
+            name="href"
+            ref={hrefEl}
+            onChange={handleLinkTextInput}></input>
           <div className="dialog-buttons">
             <button
               id="remove"
               className="remove-button"
               value="remove"
-              formMethod="dialog">
+              formMethod="dialog"
+              ref={removeBtn}
+              onClick={handleRemoveLink}>
               Remove Link
             </button>
-            <button id="confirmBtn" className="confirm-button" value="default">
+            <button
+              id="confirmBtn"
+              className="confirm-button"
+              value="default"
+              ref={confirmBtn}
+              onClick={handleSubmitLink}>
               Confirm
             </button>
           </div>
@@ -172,7 +179,9 @@ function ToolBar({ editor }) {
       <button
         id="showDialog"
         title="Link"
-        className={editor.isActive("link") ? "is-active " : ""}>
+        className={editor.isActive("link") ? "is-active " : ""}
+        ref={showButton}
+        onClick={handleLinkShowButton}>
         <i className="ri-link"></i>
       </button>
 
@@ -237,8 +246,12 @@ function ToolBar({ editor }) {
       </button>
       <br />
 
-      <dialog id="imageInput" className="inputDialog">
-        <form className="get-image">
+      <dialog
+        id="imageInput"
+        className="inputDialog"
+        ref={imgDialog}
+        onClose={handleCloseImgForm}>
+        <form className="get-image" method="post" encType="multipart/form-data">
           <button
             id="cancelImg"
             value="cancel"
@@ -252,18 +265,36 @@ function ToolBar({ editor }) {
             accept="image/*"
             className="image-upload"
             id="src"
-            name="src"></input>
+            name="src"
+            ref={srcEl}
+            onChange={handleImgSrcInput}
+          />
           <br />
           <label htmlFor="alt">Image Alt Text</label>
-          <input type="text" id="alt" name="alt" />
+          <input
+            type="text"
+            id="alt"
+            name="alt"
+            ref={altEl}
+            onChange={handleImgAltInput}
+          />
           <div className="dialog-buttons">
-            <button id="confirmImg" className="confirm-button" value="default">
+            <button
+              id="confirmImg"
+              className="confirm-button"
+              value="default"
+              ref={confirmBtnImg}
+              onClick={handleSubmitImg}>
               Confirm
             </button>
           </div>
         </form>
       </dialog>
-      <button id="showImgDialog" title="Insert Image">
+      <button
+        id="showImgDialog"
+        title="Insert Image"
+        onClick={handleImgShowButton}
+        ref={showImageButton}>
         <i className="ri-image-add-line"></i>
       </button>
 
