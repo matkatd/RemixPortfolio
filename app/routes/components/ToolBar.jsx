@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { cloudStorageUploaderHandler } from "../../utils/uploader-handler.server";
-import { useSubmit } from "@remix-run/react";
+import { useFetcher, useSearchParams } from "@remix-run/react";
 
-export async function action({ request }) {}
+export async function action({ obj }) {
+  const newSrc = cloudStorageUploaderHandler(obj.src, obj.src.name);
+}
 
 function ToolBar({ editor }) {
-  const submit = useSubmit();
+  const [searchParams] = useSearchParams();
+  const fetcher = useFetcher();
 
   const showButton = useRef(null);
   const showImageButton = useRef(null);
@@ -53,7 +56,7 @@ function ToolBar({ editor }) {
   }
 
   function handleSubmitLink(event) {
-    submit(event.currentTar);
+    event.preventDefault();
     linkDialog.current.close(hrefEl.current.value); // Have to send the select box value here.
   }
 
@@ -99,8 +102,8 @@ function ToolBar({ editor }) {
 
   function handleSubmitImg(event) {
     event.preventDefault(); // We don't want to submit this fake form
-
-    let obj = { src: srcEl.current.value, alt: altEl.current.value };
+    let obj = { src: srcEl.current.files[0], alt: altEl.current.value };
+    fetcher.submit({ some: obj }, { method: "post" });
     imgDialog.current.close(obj); // Have to send the select box value here.
   }
 
@@ -251,7 +254,7 @@ function ToolBar({ editor }) {
         className="inputDialog"
         ref={imgDialog}
         onClose={handleCloseImgForm}>
-        <form className="get-image" method="post" encType="multipart/form-data">
+        <form className="get-image">
           <button
             id="cancelImg"
             value="cancel"
