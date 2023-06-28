@@ -28,7 +28,6 @@ const options = [
 
 const validator = withYup(
   yup.object({
-    id: yup.string().required(),
     title: yup.string().label("Post Title").required(),
     category: yup.string().label("Post Category").required(),
     slug: yup.string().label("URL slug").required(),
@@ -49,7 +48,7 @@ export const action = async ({ request }) => {
   return redirect("/admin");
 };
 
-export const loader = async (args) => {
+export const loader = async () => {
   return json({
     placeholder: {
       title: "Enter a title",

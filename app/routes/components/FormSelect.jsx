@@ -12,7 +12,7 @@ function FormSelect({ name, label, selected, ...rest }) {
       <br />
       <Select
         defaultValue={selected}
-        {...getInputProps({ id: name, ...rest })}
+        {...getInputProps({ instanceId: name, ...rest })}
       />
       {error && <span className="error-class">{error}</span>}
     </div>
