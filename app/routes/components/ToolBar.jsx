@@ -1,15 +1,10 @@
-import { useRef } from "react";
-import { cloudStorageUploaderHandler } from "../../utils/uploader-handler.server";
+import { useCallback, useEffect, useRef } from "react";
 import { useFetcher, useSearchParams } from "@remix-run/react";
-
-export async function action({ obj }) {
-  const newSrc = cloudStorageUploaderHandler(obj.src, obj.src.name);
-}
+import { action } from "../admin.new";
+import { useFetcherWithPromise } from "../../utils/useFetcherWithPromise";
 
 function ToolBar({ editor }) {
-  const [searchParams] = useSearchParams();
-  const fetcher = useFetcher();
-
+  const fetcher = useFetcherWithPromise();
   const showButton = useRef(null);
   const showImageButton = useRef(null);
   const linkDialog = useRef(null);
@@ -61,28 +56,7 @@ function ToolBar({ editor }) {
   }
 
   function handleImgShowButton() {
-    let previousSrc = editor.getAttributes("image").src;
-    let previousAlt = editor.getAttributes("image").alt;
-    if (previousSrc === undefined) {
-      previousSrc = "";
-    }
-    if (previousAlt === undefined) {
-      previousAlt = "";
-    }
-    srcEl.current.value = previousSrc;
-    altEl.current.value = previousAlt;
     imgDialog.current.showModal();
-  }
-
-  function handleImgSrcInput() {
-    // TODO: Figure out how to have this happen server side...
-
-    // const newSrc = cloudStorageUploaderHandler(file, file.name);
-    confirmBtn.current.value.file = srcEl.current.files[0];
-  }
-
-  function handleImgAltInput() {
-    confirmBtn.current.value.alt = altEl.value;
   }
 
   function handleCloseImgForm() {
@@ -93,18 +67,29 @@ function ToolBar({ editor }) {
         .chain()
         .focus()
         .setImage({
-          src: imgDialog.current.returnValue.src,
-          alt: imgDialog.current.returnValue.alt,
+          src: srcEl.current.returnValue,
+          alt: altEl.current.returnValue,
         })
         .run();
     }
   }
 
-  function handleSubmitImg(event) {
+  async function handleSubmitImg(event) {
     event.preventDefault(); // We don't want to submit this fake form
-    let obj = { src: srcEl.current.files[0], alt: altEl.current.value };
-    fetcher.submit({ some: obj }, { method: "post" });
-    imgDialog.current.close(obj); // Have to send the select box value here.
+
+    const data = await fetcher.submit(event.target.form, {
+      method: "post",
+      action: "/admin/upload",
+      encType: "multipart/form-data",
+    });
+
+    console.log(data);
+    srcEl.current.returnValue = data.src;
+    altEl.current.returnValue = data.alt;
+    setTimeout(() => {
+      imgDialog.current.close();
+    }, 1000);
+    // Have to send the select box value here.
   }
 
   if (!editor) {
@@ -142,7 +127,7 @@ function ToolBar({ editor }) {
         <i className="ri-code-s-slash-line"></i>
       </button>
 
-      <dialog
+      {/* <dialog
         id="linkInput"
         className="inputDialog"
         ref={linkDialog}
@@ -178,7 +163,7 @@ function ToolBar({ editor }) {
             </button>
           </div>
         </form>
-      </dialog>
+      </dialog> */}
       <button
         id="showDialog"
         title="Link"
@@ -249,12 +234,16 @@ function ToolBar({ editor }) {
       </button>
       <br />
 
-      <dialog
+      {/* <dialog
         id="imageInput"
         className="inputDialog"
         ref={imgDialog}
         onClose={handleCloseImgForm}>
-        <form className="get-image">
+        <fetcher.Form
+          className="get-image"
+          encType="multipart/form-data"
+          method="post"
+          action="/admin/upload">
           <button
             id="cancelImg"
             value="cancel"
@@ -270,7 +259,7 @@ function ToolBar({ editor }) {
             id="src"
             name="src"
             ref={srcEl}
-            onChange={handleImgSrcInput}
+            // onChange={handleImgSrcInput}
           />
           <br />
           <label htmlFor="alt">Image Alt Text</label>
@@ -279,7 +268,7 @@ function ToolBar({ editor }) {
             id="alt"
             name="alt"
             ref={altEl}
-            onChange={handleImgAltInput}
+            // onChange={handleImgAltInput}
           />
           <div className="dialog-buttons">
             <button
@@ -287,12 +276,13 @@ function ToolBar({ editor }) {
               className="confirm-button"
               value="default"
               ref={confirmBtnImg}
-              onClick={handleSubmitImg}>
+              onClick={handleSubmitImg}
+              type="submit">
               Confirm
             </button>
           </div>
-        </form>
-      </dialog>
+        </fetcher.Form>
+      </dialog> */}
       <button
         id="showImgDialog"
         title="Insert Image"

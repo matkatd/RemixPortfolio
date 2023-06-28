@@ -12,6 +12,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
     return "";
   }
   // Convert from AsyncIterable to something Storage can handle
+
   const readable = Readable.from(data);
 
   console.log("In file handler");
@@ -53,17 +54,13 @@ const uploadStreamToCloudStorage = async (data, filename) => {
   return `https://storage.googleapis.com/portfolio-resources/${filename}`;
 };
 
-export const cloudStorageUploaderHandler = async (data, filename) => {
-  return await uploadStreamToCloudStorage(data, filename);
-};
-
 export const uploadHandler = unstable_composeUploadHandlers(
   async ({ name, data, filename }) => {
-    if (name !== "img") {
-      return undefined;
+    if (name === "img" || name === "src") {
+      const uploadedImage = await uploadStreamToCloudStorage(data, filename);
+      return uploadedImage;
     }
-    const uploadedImage = await cloudStorageUploaderHandler(data, filename);
-    return uploadedImage;
+    return undefined;
   },
   unstable_createMemoryUploadHandler() // Uses this if it's not an image
 );

@@ -27,8 +27,6 @@ const Tiptap = ({ project, childToParent }) => {
           keepMarks: true,
           keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
         },
-        Image,
-        Dropcursor,
       }),
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       TextStyle.configure({ types: [ListItem.name] }),
@@ -38,6 +36,7 @@ const Tiptap = ({ project, childToParent }) => {
       Link.configure({
         protocols: ["mailto"],
       }),
+      Image,
     ],
     content: starterContent,
     onUpdate({ editor }) {
