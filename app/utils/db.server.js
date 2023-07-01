@@ -24,21 +24,21 @@ export async function getPhotos() {
   return prisma.photography.findMany();
 }
 
-export async function createPost(post) {
+export async function createProject(project) {
   const date = new Date();
   let currentDate = `${date.toLocaleString("en-US", {
     month: "long",
   })} ${date.getFullYear()}`;
-  const writeup = [post.writeup];
+  const writeup = [project.writeup];
   try {
     await prisma.projects.create({
       data: {
-        category: post.category,
-        title: post.title,
+        category: project.category,
+        title: project.title,
         date: currentDate,
-        slug: post.slug,
-        img: post.img,
-        alt: post.alt,
+        slug: project.slug,
+        img: project.img,
+        alt: project.alt,
         writeup: writeup,
       },
     });
@@ -47,26 +47,44 @@ export async function createPost(post) {
   }
 }
 
-export async function updatePost(post) {
+export async function updateProject(project) {
   const date = new Date();
   let currentDate = `${date.toLocaleString("en-US", {
     month: "long",
   })} ${date.getFullYear()}`;
 
-  const writeup = Array.isArray(post.writeup) ? post.writeup : [post.writeup];
+  const writeup = Array.isArray(project.writeup)
+    ? project.writeup
+    : [project.writeup];
 
-  prisma.projects.update({
-    where: {
-      id: post.id,
-    },
-    data: {
-      category: post.category,
-      title: post.title,
-      date: currentDate,
-      slug: post.slug,
-      img: post.img,
-      alt: post.alt,
-      writeup: writeup,
-    },
-  });
+  try {
+    await prisma.projects.update({
+      where: {
+        id: project.id,
+      },
+      data: {
+        category: project.category,
+        title: project.title,
+        date: currentDate,
+        slug: project.slug,
+        img: project.img,
+        alt: project.alt,
+        writeup: writeup,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function deleteProject(id) {
+  try {
+    await prisma.projects.delete({
+      where: {
+        id: id,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }

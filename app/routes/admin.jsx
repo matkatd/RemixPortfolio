@@ -1,4 +1,4 @@
-import { Outlet } from "@remix-run/react";
+import { Link, Outlet } from "@remix-run/react";
 import { requireUserId } from "../utils/auth.server";
 import styles from "../styles/tiptap.css";
 import adminStyles from "../styles/admin.css";
@@ -12,7 +12,9 @@ export const loader = async ({ request }) => {
 export default function Admin() {
   return (
     <main>
-      <h2>Admin</h2>
+      <Link className="admin-header" to="/admin">
+        <h2>Admin</h2>
+      </Link>
       <Outlet />
     </main>
   );

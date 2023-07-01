@@ -127,7 +127,7 @@ function ToolBar({ editor }) {
         <i className="ri-code-s-slash-line"></i>
       </button>
 
-      {/* <dialog
+      <dialog
         id="linkInput"
         className="inputDialog"
         ref={linkDialog}
@@ -163,7 +163,7 @@ function ToolBar({ editor }) {
             </button>
           </div>
         </form>
-      </dialog> */}
+      </dialog>
       <button
         id="showDialog"
         title="Link"
@@ -234,7 +234,7 @@ function ToolBar({ editor }) {
       </button>
       <br />
 
-      {/* <dialog
+      <dialog
         id="imageInput"
         className="inputDialog"
         ref={imgDialog}
@@ -282,7 +282,7 @@ function ToolBar({ editor }) {
             </button>
           </div>
         </fetcher.Form>
-      </dialog> */}
+      </dialog>
       <button
         id="showImgDialog"
         title="Insert Image"
