@@ -13,7 +13,7 @@ import {
 } from "remix-validated-form";
 import { useState } from "react";
 import { uploadHandler } from "../utils/uploader-handler.server";
-import { getProject, updatePost } from "../utils/db.server";
+import { getProject, updateProject } from "../utils/db.server";
 
 import Tiptap from "./components/Tiptap";
 import FormInput from "./components/FormInput";
@@ -50,7 +50,7 @@ export async function action({ request }) {
   if (fieldValues.data.img === "") {
     fieldValues.data.img = fieldValues.data.originalImg;
   }
-  updatePost(fieldValues.data);
+  updateProject(fieldValues.data);
   return redirect("/admin");
 }
 

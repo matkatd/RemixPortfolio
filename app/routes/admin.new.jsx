@@ -13,7 +13,7 @@ import {
 } from "remix-validated-form";
 import { useState } from "react";
 import { uploadHandler } from "../utils/uploader-handler.server";
-import { createPost } from "../utils/db.server";
+import { createProject } from "../utils/db.server";
 
 import Tiptap from "./components/Tiptap";
 import FormInput from "./components/FormInput";
@@ -44,7 +44,7 @@ export const action = async ({ request }) => {
   );
   const fieldValues = await validator.validate(formData);
   if (fieldValues.error) return validationError(fieldValues.error);
-  createPost(fieldValues.data);
+  createProject(fieldValues.data);
   return redirect("/admin");
 };
 

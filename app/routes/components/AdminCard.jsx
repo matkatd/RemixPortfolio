@@ -1,6 +1,13 @@
-import { Link } from "@remix-run/react";
+import { Link, useFetcher, useSubmit } from "@remix-run/react";
+import { useState } from "react";
+import Confirmation from "./Confirmation";
 
 function AdminCard({ project }) {
+  const [showConfirmation, setConfirmation] = useState(false);
+  function showDialog() {
+    setConfirmation(true);
+  }
+
   if (!project) {
     return <div></div>;
   }
@@ -14,9 +21,17 @@ function AdminCard({ project }) {
       <Link className="card-button" to={"edit/" + project.slug}>
         Edit
       </Link>
-      <Link className="card-button delete" to={"edit/" + project.slug}>
+      <div className="card-button delete" onClick={showDialog}>
         Delete
-      </Link>
+      </div>
+      {showConfirmation ? (
+        <Confirmation
+          projectId={project.id}
+          setConfirmation={setConfirmation}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
