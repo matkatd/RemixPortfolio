@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFetcher, useSearchParams } from "@remix-run/react";
 import { action } from "../admin.new";
-import { useFetcherWithPromise } from "../../utils/useFetcherWithPromise";
+import { useFetcherWithPromise } from "../../hooks/useFetcherWithPromise";
 
 function ToolBar({ editor }) {
   const fetcher = useFetcherWithPromise();
