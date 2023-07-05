@@ -16,7 +16,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
   const readable = Readable.from(data);
 
   console.log("In file handler");
-  const bucketName = "portfolio-resources";
+  const bucketName = env.GOOGLE_BUCKET_NAME;
 
   // Create Cloud Storage client
   const cloudStorage = new Storage({
@@ -51,7 +51,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
   }
 
   streamFileUpload().catch(console.error);
-  return `https://storage.googleapis.com/portfolio-resources/${filename}`;
+  return `https://storage.googleapis.com/${bucketName}/${filename}`;
 };
 
 export const uploadHandler = unstable_composeUploadHandlers(
