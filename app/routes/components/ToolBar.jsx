@@ -1,7 +1,36 @@
 import { useCallback, useEffect, useRef } from "react";
-import { useFetcher, useSearchParams } from "@remix-run/react";
+import {
+  isRouteErrorResponse,
+  useFetcher,
+  useRouteError,
+  useSearchParams,
+} from "@remix-run/react";
 import { action } from "../admin.new";
 import { useFetcherWithPromise } from "../../hooks/useFetcherWithPromise";
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="error-boundary">
+        <h2>Oopsie on toolbar</h2>
+        <p>
+          Status: {error.status}: {error.statusText}
+        </p>
+        <p>{error.data.message}</p>
+      </div>
+    );
+  }
+
+  let errorMessage = "Unknown Error";
+  return (
+    <div className="error-boundary">
+      <h1>Uh oh ...</h1>
+      <p>Something went wrong.</p>
+      <pre>{errorMessage}</pre>
+    </div>
+  );
+}
 
 function ToolBar({ editor }) {
   const fetcher = useFetcherWithPromise();

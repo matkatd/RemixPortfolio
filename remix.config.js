@@ -10,13 +10,13 @@ module.exports = {
     v2_meta: true,
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
-    serverModuleFormat: "cjs",
+    serverModuleFormat: "esm",
   },
   serverDependenciesToBundle: [
     "yet-another-react-lightbox",
     "yet-another-react-lightbox/plugins/zoom",
     "yet-another-react-lightbox/plugins/thumbnails",
     "lodash-es",
-    "lodash"
+    "lodash",
   ],
 };

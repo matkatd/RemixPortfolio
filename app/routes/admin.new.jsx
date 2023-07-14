@@ -3,7 +3,11 @@ import {
   redirect,
   unstable_parseMultipartFormData,
 } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import {
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import * as yup from "yup";
 import { withYup } from "@remix-validated-form/with-yup";
 import {
@@ -36,6 +40,30 @@ const validator = withYup(
     writeup: yup.string().required(),
   })
 );
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="error-boundary">
+        <h2>Oopsie on new post</h2>
+        <p>
+          Status: {error.status}: {error.statusText}
+        </p>
+        <p>{error.data.message}</p>
+      </div>
+    );
+  }
+
+  let errorMessage = "Unknown Error";
+  return (
+    <div className="error-boundary">
+      <h1>Uh oh ...</h1>
+      <p>Something went wrong.</p>
+      <pre>{errorMessage}</pre>
+    </div>
+  );
+}
 
 export const action = async ({ request }) => {
   let formData;

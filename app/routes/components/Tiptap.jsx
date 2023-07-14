@@ -10,6 +10,31 @@ import Image from "@tiptap/extension-image";
 import ToolBar from "./ToolBar";
 import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="error-boundary">
+        <h2>Oopsie on the Tiptap editor</h2>
+        <p>
+          Status: {error.status}: {error.statusText}
+        </p>
+        <p>{error.data.message}</p>
+      </div>
+    );
+  }
+
+  let errorMessage = "Unknown Error";
+  return (
+    <div className="error-boundary">
+      <h1>Uh oh ...</h1>
+      <p>Something went wrong.</p>
+      <pre>{errorMessage}</pre>
+    </div>
+  );
+}
 
 const Tiptap = ({ project, childToParent }) => {
   const starterContent = project
