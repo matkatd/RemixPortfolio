@@ -43,7 +43,7 @@ export async function createProject(project) {
       },
     });
   } catch (e) {
-    console.log(e);
+    console.log("Exception: " + e);
   }
 }
 
