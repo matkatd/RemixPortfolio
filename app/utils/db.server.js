@@ -30,7 +30,7 @@ export async function createProject(project) {
     month: "long",
   })} ${date.getFullYear()}`;
   const writeup = [project.writeup];
-  console.log("prisma-createproject: " + project);
+  console.log("prisma-createproject: " + { project });
   try {
     await prisma.projects.create({
       data: {
@@ -57,7 +57,7 @@ export async function updateProject(project) {
   const writeup = Array.isArray(project.writeup)
     ? project.writeup
     : [project.writeup];
-  console.log("prisma-updateproject: " + project);
+  console.log("prisma-updateproject: " + { project });
   try {
     await prisma.projects.update({
       where: {
@@ -87,6 +87,6 @@ export async function deleteProject(id) {
       },
     });
   } catch (e) {
-    console.log(e);
+    console.log("Exception while deleting: " + e);
   }
 }

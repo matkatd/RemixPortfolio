@@ -112,7 +112,7 @@ function ToolBar({ editor }) {
       encType: "multipart/form-data",
     });
 
-    console.log(data);
+    console.log("toolbar-upload-data" + data);
     srcEl.current.returnValue = data.src;
     altEl.current.returnValue = data.alt;
     setTimeout(() => {

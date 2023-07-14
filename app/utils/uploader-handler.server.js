@@ -14,7 +14,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
 
   const readable = Readable.from(data);
 
-  console.log("In file handler");
+  console.log("upload-handler: In file handler");
   const bucketName = env.GOOGLE_BUCKET_NAME;
 
   // Create Cloud Storage client
@@ -44,7 +44,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
       // The file upload is complete
     });
 
-    console.log(`${filename} uploaded to ${bucketName}`);
+    console.log(`upload-handler: ${filename} uploaded to ${bucketName}`);
   }
 
   streamFileUpload().catch("Upload Error: " + console.error);

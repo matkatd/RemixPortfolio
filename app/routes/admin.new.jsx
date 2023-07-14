@@ -70,7 +70,7 @@ export const action = async ({ request }) => {
   try {
     formData = await unstable_parseMultipartFormData(request, uploadHandler);
   } catch (e) {
-    console.log("Error uploading form: " + e);
+    console.log("admin-new: Error uploading form: " + e);
   }
 
   const fieldValues = await validator.validate(formData);

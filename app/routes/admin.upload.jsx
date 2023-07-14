@@ -6,11 +6,11 @@ export async function action({ request }) {
   try {
     formData = await unstable_parseMultipartFormData(request, uploadHandler);
   } catch (e) {
-    console.log("Problem uploading file: " + e);
+    console.log("admin-upload: Problem uploading file: " + e);
   }
 
   const src = formData.get("src");
-  console.log(src.name);
+  console.log("admin-upload: Uploaded filename: " + src.name);
 
   return json({ src: src, alt: formData.get("alt") });
   //   return json(await cloudStorageUploaderHandler(src, src.name));
