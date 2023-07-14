@@ -24,7 +24,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
       type: "service_account",
       project_id: env.PROJECT_ID,
       private_key_id: env.GOOGLE_PRIVATE_KEY_ID,
-      private_key: env.GOOGLE_PRIVATE_KEY,
+      private_key: env.GOOGLE_PRIVATE_KEY.split(String.raw`\n`).join("\n"),
       client_email: env.GOOGLE_CLIENT_EMAIL,
       client_id: env.GOOGLE_CLIENT_ID,
       auth_uri: "https://accounts.google.com/o/oauth2/auth",
