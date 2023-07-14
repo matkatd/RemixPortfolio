@@ -74,7 +74,10 @@ export async function action({ request }) {
   );
 
   const fieldValues = await validator.validate(formData);
-  if (fieldValues.error) return validationError(fieldValues.error);
+  if (fieldValues.error) {
+    console.log("admin-edit: there's a validation error: " + fieldValues.error);
+    return validationError(fieldValues.error);
+  }
   if (fieldValues.data.img === "") {
     fieldValues.data.img = fieldValues.data.originalImg;
   }
