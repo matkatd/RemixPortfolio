@@ -47,7 +47,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
     console.log(`${filename} uploaded to ${bucketName}`);
   }
 
-  streamFileUpload().catch(console.error);
+  streamFileUpload().catch("Upload Error: " + console.error);
   return `https://storage.googleapis.com/${bucketName}/${filename}`;
 };
 
