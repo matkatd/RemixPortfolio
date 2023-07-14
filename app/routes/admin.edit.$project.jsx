@@ -48,7 +48,7 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <div className="error-boundary">
-        <h2>Oops</h2>
+        <h2>Oops... Error on Edit Project</h2>
         <p>
           Status: {error.status}: {error.statusText}
         </p>
@@ -60,7 +60,7 @@ export function ErrorBoundary() {
   let errorMessage = "Unknown Error";
   return (
     <div className="error-boundary">
-      <h1>Uh oh ...</h1>
+      <h1>Uh oh... Error on Edit Project</h1>
       <p>Something went wrong.</p>
       <pre>{errorMessage}</pre>
     </div>

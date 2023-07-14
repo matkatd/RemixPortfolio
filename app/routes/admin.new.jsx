@@ -58,7 +58,7 @@ export function ErrorBoundary() {
   let errorMessage = "Unknown Error";
   return (
     <div className="error-boundary">
-      <h1>Uh oh ...</h1>
+      <h1>Uh oh... on new post</h1>
       <p>Something went wrong.</p>
       <pre>{errorMessage}</pre>
     </div>

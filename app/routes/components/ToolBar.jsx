@@ -26,7 +26,7 @@ export function ErrorBoundary() {
   return (
     <div className="error-boundary">
       <h1>Uh oh ...</h1>
-      <p>Something went wrong.</p>
+      <p>Something went wrong on toolbar</p>
       <pre>{errorMessage}</pre>
     </div>
   );
