@@ -45,6 +45,7 @@ const validator = withYup(
 
 export function ErrorBoundary() {
   const error = useRouteError();
+  console.log(error);
   if (isRouteErrorResponse(error)) {
     return (
       <div className="error-boundary">
@@ -122,6 +123,7 @@ export default function AdminEdit() {
         <FormInput name="id" value={project.id} type="hidden" />
         <FormInput name="title" label="Post Title" value={project.title} />
         <FormSelect
+          className="edit-select"
           name="category"
           label="Choose a Category"
           options={options}
