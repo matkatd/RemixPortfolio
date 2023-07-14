@@ -38,10 +38,13 @@ const validator = withYup(
 );
 
 export const action = async ({ request }) => {
-  const formData = await unstable_parseMultipartFormData(
-    request,
-    uploadHandler
-  );
+  let formData;
+  try {
+    formData = await unstable_parseMultipartFormData(request, uploadHandler);
+  } catch (e) {
+    console.log("Error uploading form: " + e);
+  }
+
   const fieldValues = await validator.validate(formData);
   if (fieldValues.error) return validationError(fieldValues.error);
   createProject(fieldValues.data);

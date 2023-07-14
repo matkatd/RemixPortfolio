@@ -43,7 +43,7 @@ export async function createProject(project) {
       },
     });
   } catch (e) {
-    console.log("Exception: " + e);
+    console.log("Exception while creating with prisma: " + e);
   }
 }
 
@@ -73,7 +73,7 @@ export async function updateProject(project) {
       },
     });
   } catch (e) {
-    console.log(e);
+    console.log("Exception while updating using prisma: " + e);
   }
 }
 
