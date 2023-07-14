@@ -23,7 +23,7 @@ export default function App() {
   return (
     <html lang="en">
       <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Meta />
         <Links />
       </head>
@@ -43,4 +43,28 @@ export default function App() {
 
 export function links() {
   return [{ rel: "stylesheet", href: mainStyles }];
+}
+
+export function ErrorBoundary({ error }) {
+  console.error(error);
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <header>
+          <NavBar />
+        </header>
+        <h1>Oopsie...</h1>
+        <p>Here's your error: {error}</p>
+        <Footer />
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  );
 }
