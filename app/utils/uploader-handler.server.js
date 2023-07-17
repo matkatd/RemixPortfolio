@@ -42,6 +42,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
   async function streamFileUpload() {
     readable.pipe(file.createWriteStream()).on("finish", () => {
       // The file upload is complete
+      console.log("upload-handler: upload completed");
     });
 
     console.log(`upload-handler: ${filename} uploaded to ${bucketName}`);
