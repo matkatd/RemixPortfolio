@@ -40,23 +40,19 @@ const uploadStreamToCloudStorage = async (data, filename) => {
   const file = bucket.file(filename);
 
   async function streamFileUpload() {
-    readable.pipe(file.createWriteStream()).on("finish", () => {
-      // The file upload is complete
-      console.log("upload-handler: upload completed");
-    });
+    readable
+      .pipe(file.createWriteStream({ resumable: false }))
+      .on("finish", () => {
+        // The file upload is complete
+        console.log("upload-handler: upload completed");
+      });
 
-    console.log(`upload-handler: ${filename} uploaded to ${bucketName}`);
+    console.log(`upload-handler: ${file.name} uploaded to ${bucket.name}`);
   }
 
-  await streamFileUpload().catch((error) => {
-    console.log("upload-handler-error: " + error);
-    console.error();
-  });
-
-  console.log(
-    `upload-handler: confirming: ${filename} uploaded to ${bucketName}`
-  );
-  return `https://storage.googleapis.com/${bucketName}/${filename}`;
+  await streamFileUpload().catch(console.error);
+  console.log(`upload-handler: confirming publicURL: ${file.publicUrl()}`);
+  return file.publicUrl();
 };
 
 export const uploadHandler = unstable_composeUploadHandlers(
