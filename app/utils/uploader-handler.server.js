@@ -47,10 +47,11 @@ const uploadStreamToCloudStorage = async (data, filename) => {
     console.log(`upload-handler: ${filename} uploaded to ${bucketName}`);
   }
 
-  streamFileUpload().catch((error) =>
-    console.log("upload-handler: error: " + error)
-  );
+  streamFileUpload().catch(console.error("upload-handler: error uploading: "));
 
+  console.log(
+    `upload-handler: confirming: ${filename} uploaded to ${bucketName}`
+  );
   return `https://storage.googleapis.com/${bucketName}/${filename}`;
 };
 
