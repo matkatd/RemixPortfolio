@@ -75,7 +75,7 @@ export const action = async ({ request }) => {
 
   const fieldValues = await validator.validate(formData);
   if (fieldValues.error) {
-    console.log("admin-edit: there's a validation error: " + fieldValues.error);
+    console.log("admin-new: there's a validation error: " + fieldValues.error);
     return validationError(fieldValues.error);
   }
   createProject(fieldValues.data);
