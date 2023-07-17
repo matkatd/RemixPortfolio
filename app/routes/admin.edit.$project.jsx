@@ -76,7 +76,7 @@ export async function action({ request }) {
     console.log("admin-edit: Error uploading form: " + e);
   }
 
-  const fieldValues = await validator.validate(formData);
+  const fieldValues = await validator.validate(formData).catch(console.error);
   if (fieldValues.error) {
     console.log("admin-edit: there's a validation error: " + fieldValues.error);
     return validationError(fieldValues.error);
