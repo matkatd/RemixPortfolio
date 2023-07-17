@@ -48,7 +48,10 @@ const uploadStreamToCloudStorage = async (data, filename) => {
     console.log(`upload-handler: ${filename} uploaded to ${bucketName}`);
   }
 
-  await streamFileUpload().catch(console.error);
+  await streamFileUpload().catch((error) => {
+    console.log("upload-handler-error: " + error);
+    console.error();
+  });
 
   console.log(
     `upload-handler: confirming: ${filename} uploaded to ${bucketName}`
