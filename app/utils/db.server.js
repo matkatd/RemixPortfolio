@@ -32,7 +32,7 @@ export async function createProject(project) {
   const writeup = [project.writeup];
   console.log("prisma-createproject: " + JSON.stringify(project, null, 2));
   try {
-    await prisma.projects.create({
+    const data = await prisma.projects.create({
       data: {
         category: project.category,
         title: project.title,
@@ -43,6 +43,9 @@ export async function createProject(project) {
         writeup: writeup,
       },
     });
+    if (data === {}) {
+      throw new Error("Empty object after creating with prisma");
+    }
   } catch (e) {
     console.log("Exception while creating with prisma: " + e);
   }
@@ -59,7 +62,7 @@ export async function updateProject(project) {
     : [project.writeup];
   console.log("prisma-updateproject: " + JSON.stringify(project, null, 2));
   try {
-    await prisma.projects.update({
+    const data = await prisma.projects.update({
       where: {
         id: project.id,
       },
@@ -73,6 +76,9 @@ export async function updateProject(project) {
         writeup: writeup,
       },
     });
+    if (data !== project) {
+      throw new Error("failed update with prisma");
+    }
   } catch (e) {
     console.log("Exception while updating using prisma: " + e);
   }
