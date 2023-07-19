@@ -76,14 +76,10 @@ export async function updateProject(project) {
         writeup: writeup,
       },
     });
-    if (JSON.stringify(data) !== JSON.stringify(project)) {
-      throw new Error("failed update with prisma");
-    }
   } catch (e) {
     console.log("Exception while updating using prisma: " + e);
   }
 }
-
 export async function deleteProject(id) {
   console.log("prisma-deleteproject: " + id);
   try {

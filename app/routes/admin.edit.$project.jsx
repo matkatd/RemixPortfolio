@@ -33,8 +33,8 @@ const options = [
 const validator = withYup(
   yup.object({
     id: yup.string().required(),
-    title: yup.string().label("Post Title").required(),
     category: yup.string().label("Post Category").required(),
+    title: yup.string().label("Post Title").required(),
     slug: yup.string().label("URL slug").required(),
     img: yup.string().label("Main image for Post"),
     alt: yup.string().label("Alt text for image").required(),
