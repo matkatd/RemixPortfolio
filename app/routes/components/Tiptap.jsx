@@ -70,7 +70,7 @@ const Tiptap = ({ project, childToParent }) => {
       }
     },
   });
-  // TODO: allow user to insert images and have them uploaded to GSP
+
   // This might work: https://dev.to/timvermaercke/uploading-files-to-google-cloud-storage-with-remixrun-3c5c
 
   return (

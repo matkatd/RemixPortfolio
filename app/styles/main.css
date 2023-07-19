@@ -76,6 +76,16 @@ h3 {
   font-family: var(--font-header);
 }
 
+h4 {
+  font-family: var(--font-header);
+  font-style: italic;
+}
+
+h5 {
+  font-family: var(--font);
+  font-style: italic;
+}
+
 p {
   font-family: var(--font);
 }
