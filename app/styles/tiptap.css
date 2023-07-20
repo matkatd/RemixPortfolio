@@ -76,6 +76,10 @@ strong {
   background-color: var(--toolbar-color);
   border-radius: 10px;
   padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .toolbar button {
