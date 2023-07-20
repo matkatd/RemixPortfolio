@@ -78,7 +78,7 @@ export const action = async ({ request }) => {
     console.log("admin-new: there's a validation error: " + fieldValues.error);
     return validationError(fieldValues.error);
   }
-  createProject(fieldValues.data);
+  await createProject(fieldValues.data);
   return redirect("/admin");
 };
 

@@ -84,7 +84,7 @@ export async function action({ request }) {
   if (fieldValues.data.img === "") {
     fieldValues.data.img = fieldValues.data.originalImg;
   }
-  updateProject(fieldValues.data);
+  await updateProject(fieldValues.data);
   return redirect("/admin");
 }
 
