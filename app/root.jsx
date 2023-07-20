@@ -8,6 +8,7 @@ import {
 } from "@remix-run/react";
 
 import mainStyles from "~/styles/main.css";
+import highlight from "~/styles/code.css";
 import NavBar from "~/routes/components/NavBar";
 import { Footer } from "~/routes/components/Footer";
 
@@ -42,7 +43,10 @@ export default function App() {
 }
 
 export function links() {
-  return [{ rel: "stylesheet", href: mainStyles }];
+  return [
+    { rel: "stylesheet", href: mainStyles },
+    { rel: "stylesheet", href: highlight },
+  ];
 }
 
 export function ErrorBoundary({ error }) {

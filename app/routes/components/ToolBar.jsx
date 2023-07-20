@@ -1,11 +1,5 @@
-import { useCallback, useEffect, useRef } from "react";
-import {
-  isRouteErrorResponse,
-  useFetcher,
-  useRouteError,
-  useSearchParams,
-} from "@remix-run/react";
-import { action } from "../admin.new";
+import { useRef } from "react";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import { useFetcherWithPromise } from "../../hooks/useFetcherWithPromise";
 
 export function ErrorBoundary() {

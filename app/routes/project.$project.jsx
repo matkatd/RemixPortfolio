@@ -5,6 +5,7 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import ReadOnlyTiptap from "./components/ReadOnlyTiptap";
 
 export async function loader({ params }) {
   const project = await getProject(params.project);
@@ -25,7 +26,7 @@ export default function Project() {
       <div className="project-body">
         <h1 id="projectTitle">{data.title}</h1>
         <img id="projectImg" src={data.img} alt={data.alt} />
-        {convertToHTML(data.writeup)}
+        <ReadOnlyTiptap project={data} />
       </div>
     </main>
   );

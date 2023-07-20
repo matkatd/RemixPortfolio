@@ -7,7 +7,6 @@ import { TextStyle } from "@tiptap/extension-text-style";
 import { ListItem } from "@tiptap/extension-list-item";
 import Image from "@tiptap/extension-image";
 import { lowlight } from "lowlight";
-import ToolBar from "./ToolBar";
 import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
@@ -49,12 +48,11 @@ export function ErrorBoundary() {
   );
 }
 
-const Tiptap = ({ project, childToParent }) => {
-  const starterContent = project
-    ? project.writeup.join(" ")
-    : "<p>Hello World! 🌎️</p>";
+const ReadOnlyTiptap = ({ project }) => {
+  const starterContent = project.writeup.join(" ");
 
   const editor = useEditor({
+    editable: false,
     extensions: [
       StarterKit.configure({
         bulletList: {
@@ -80,21 +78,13 @@ const Tiptap = ({ project, childToParent }) => {
       Image,
     ],
     content: starterContent,
-    onUpdate({ editor }) {
-      if (editor) {
-        childToParent(editor.getHTML());
-      }
-    },
   });
-
-  // This might work: https://dev.to/timvermaercke/uploading-files-to-google-cloud-storage-with-remixrun-3c5c
 
   return (
     <div className="editor">
-      <ToolBar editor={editor} />
       <EditorContent editor={editor} />
     </div>
   );
 };
 
-export default Tiptap;
+export default ReadOnlyTiptap;

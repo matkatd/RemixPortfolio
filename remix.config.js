@@ -11,6 +11,7 @@ module.exports = {
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
     serverModuleFormat: "esm",
+    v2_dev: true,
   },
   serverDependenciesToBundle: [
     "yet-another-react-lightbox",
@@ -18,5 +19,7 @@ module.exports = {
     "yet-another-react-lightbox/plugins/thumbnails",
     "lodash-es",
     "lodash",
+    "lowlight",
+    "fault",
   ],
 };

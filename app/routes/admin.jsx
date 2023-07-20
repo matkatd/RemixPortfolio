@@ -3,7 +3,6 @@ import { requireUserId } from "../utils/auth.server";
 import styles from "../styles/tiptap.css";
 import adminStyles from "../styles/admin.css";
 import remixicon from "remixicon/fonts/remixicon.css";
-
 export const loader = async ({ request }) => {
   await requireUserId(request);
   return null;
