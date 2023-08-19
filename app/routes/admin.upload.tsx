@@ -15,5 +15,4 @@ export async function action({ request }: ActionArgs) {
   console.log("admin-upload: Uploaded filename: " + src?.name);
 
   return json({ src: src, alt: formData.get("alt") });
-  //   return json(await cloudStorageUploaderHandler(src, src.name));
 }

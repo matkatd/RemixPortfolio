@@ -40,15 +40,18 @@ function ToolBar({ editor }) {
   const removeBtn = useRef(null);
 
   function handleLinkShowButton() {
+    // editor is the Tiptap editor and is passed in as a prop
     let previousUrl = editor.getAttributes("link").href;
     if (previousUrl === undefined) {
       previousUrl = "";
     }
+    // We want to prepopulate the url value with the previous one, or ""
     hrefEl.current.value = previousUrl;
     linkDialog.current.showModal();
   }
 
   function handleLinkTextInput() {
+    // Send text input to the confirm button for later
     confirmBtn.current.value = hrefEl.current.value;
   }
 
@@ -75,7 +78,8 @@ function ToolBar({ editor }) {
 
   function handleSubmitLink(event) {
     event.preventDefault();
-    linkDialog.current.close(hrefEl.current.value); // Have to send the select box value here.
+    // Have to send the select box value here.
+    linkDialog.current.close(hrefEl.current.value);
   }
 
   function handleImgShowButton() {
@@ -98,7 +102,7 @@ function ToolBar({ editor }) {
   }
 
   async function handleSubmitImg(event) {
-    event.preventDefault(); // We don't want to submit this fake form
+    event.preventDefault();
 
     const data = await fetcher.submit(event.target.form, {
       method: "post",
@@ -109,10 +113,8 @@ function ToolBar({ editor }) {
     console.log("toolbar-upload-data" + data);
     srcEl.current.returnValue = data.src;
     altEl.current.returnValue = data.alt;
-    setTimeout(() => {
-      imgDialog.current.close();
-    }, 1000);
-    // Have to send the select box value here.
+
+    imgDialog.current.close();
   }
 
   if (!editor) {
@@ -282,17 +284,10 @@ function ToolBar({ editor }) {
             id="src"
             name="src"
             ref={srcEl}
-            // onChange={handleImgSrcInput}
           />
           <br />
           <label htmlFor="alt">Image Alt Text</label>
-          <input
-            type="text"
-            id="alt"
-            name="alt"
-            ref={altEl}
-            // onChange={handleImgAltInput}
-          />
+          <input type="text" id="alt" name="alt" ref={altEl} />
           <div className="dialog-buttons">
             <button
               id="confirmImg"
