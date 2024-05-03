@@ -1,4 +1,5 @@
 import { json } from "@remix-run/node";
+import { env } from "process";
 import { getProject } from "../utils/db.server";
 import {
   isRouteErrorResponse,
@@ -13,19 +14,18 @@ export async function loader({ params }) {
   if (!project) {
     throw new Response("Not Found", { status: 404 });
   }
-
-  return json(project);
+  return json({ data: project, storageUrl: env.STORAGE_URL });
 }
 
 export default function Project() {
-  const data = useLoaderData();
+  const { data, storageUrl } = useLoaderData();
 
   return (
     <main className="project-page">
       <div className="left-sidebar"></div>
       <div className="project-body">
         <h1 id="projectTitle">{data.title}</h1>
-        <img id="projectImg" src={data.img} alt={data.alt} />
+        <img id="projectImg" src={storageUrl + data.img} alt={data.alt} />
         <ReadOnlyTiptap project={data} />
       </div>
     </main>
@@ -54,10 +54,4 @@ export function ErrorBoundary() {
       <pre>{error.message || errorMessage}</pre>
     </div>
   );
-}
-
-function convertToHTML(writeup) {
-  const parse = require("html-react-parser");
-  const html = parse(writeup.join(""));
-  return html;
 }

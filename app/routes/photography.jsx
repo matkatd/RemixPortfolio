@@ -1,4 +1,5 @@
 import styles from "~/styles/project.css";
+import { env } from "process";
 import { useLoaderData } from "@remix-run/react";
 import { getPhotos } from "../utils/db.server";
 import { Lightbox } from "yet-another-react-lightbox";
@@ -16,23 +17,23 @@ export async function loader() {
   photos.forEach((photo) => {
     lightBox.push({
       key: photo.id,
-      src: photo.img,
+      src: env.STORAGE_URL + photo.img,
       width: 3000,
       alt: photo.alt,
       srcset: [
-        { src: photo.thumb, width: 648, height: 486 },
-        { src: photo.img, width: 3000 },
+        { src: env.STORAGE_URL + photo.thumb, width: 648, height: 486 },
+        { src: env.STORAGE_URL + photo.img, width: 3000 },
       ],
     });
     data.push({
       key: photo.id,
-      src: photo.thumb,
+      src: env.STORAGE_URL + photo.thumb,
       width: 648,
       height: 486,
       alt: photo.alt,
       srcset: [
-        { src: photo.thumb, width: 648, height: 486 },
-        { src: photo.img, width: 3000 },
+        { src: env.STORAGE_URL + photo.thumb, width: 648, height: 486 },
+        { src: env.STORAGE_URL + photo.img, width: 3000 },
       ],
     });
   });

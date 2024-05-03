@@ -5,6 +5,9 @@ export async function getProjects(category) {
     where: {
       category: category,
     },
+    orderBy: {
+      date: "desc",
+    },
   });
 }
 

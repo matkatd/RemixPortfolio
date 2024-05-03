@@ -17,21 +17,23 @@ export default function ContactPage() {
               className="linked-button"
               target="_blank"
               rel="noopener noreferrer"
-              href="https://www.linkedin.com/in/david-thompson-569459210/">
+              href="https://www.linkedin.com/in/david-thompson-569459210/"
+            >
               LinkedIn
             </a>
             <a
               className="linked-button"
               target="_blank"
               rel="noopener noreferrer"
-              href="https://storage.googleapis.com/cloudclock-pdf/Resume.pdf">
+              href="https://storage.googleapis.com/cloudclock-pdf/Resume.pdf"
+            >
               Resume
             </a>
           </div>
         </div>
         <img
           className="portrait"
-          src="https://storage.cloud.google.com/portfolio-resources/david.jpg"
+          src="https://storage.googleapis.com/portfolio-resources/david.jpg"
           alt="Portrait of David Thompson"
         />
       </div>
