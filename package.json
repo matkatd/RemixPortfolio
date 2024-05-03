@@ -29,6 +29,7 @@
     "@tiptap/starter-kit": "^2.0.3",
     "babel-loader": "^9.1.2",
     "bcryptjs": "^2.4.3",
+    "highlight.js": "^11.9.0",
     "html-react-parser": "^3.0.16",
     "isbot": "^3.6.5",
     "lowlight": "^2.9.0",
