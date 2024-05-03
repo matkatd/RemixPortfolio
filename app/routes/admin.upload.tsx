@@ -1,8 +1,9 @@
-import { FormData, json, unstable_parseMultipartFormData } from "@remix-run/node";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs} from "@remix-run/node";
+import { json, unstable_parseMultipartFormData } from "@remix-run/node";
+
 import { uploadHandler } from "../utils/uploader-handler.server";
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   let formData: FormData = new FormData();
   try {
     formData = await unstable_parseMultipartFormData(request, uploadHandler);

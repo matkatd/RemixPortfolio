@@ -259,7 +259,7 @@ main.img-page {
   margin-left: 1rem;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
-  line-height: 1.5rem;
+  /* line-height: 1.5rem; */
   height: 2.5rem;
   background-color: var(--main-blue);
   border-radius: 15px 7px 15px 7px;

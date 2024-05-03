@@ -6,12 +6,7 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   future: {
-    v2_errorBoundary: true,
-    v2_meta: true,
-    v2_normalizeFormMethod: true,
-    v2_routeConvention: true,
     serverModuleFormat: "esm",
-    v2_dev: true,
   },
   serverDependenciesToBundle: [
     "yet-another-react-lightbox",

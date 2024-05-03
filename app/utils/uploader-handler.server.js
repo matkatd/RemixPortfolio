@@ -55,7 +55,7 @@ const uploadStreamToCloudStorage = async (data, filename) => {
 
   await streamFileUpload().catch(console.error);
   console.log(`upload-handler: confirming publicURL: ${file.publicUrl()}`);
-  return file.publicUrl();
+  return bucket.name + "/" + file.name;
 };
 
 export const uploadHandler = unstable_composeUploadHandlers(
