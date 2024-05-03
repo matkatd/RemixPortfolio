@@ -5,6 +5,7 @@ import {
 } from "@remix-run/react";
 import { getProjects } from "../utils/db.server";
 
+import { env } from "process";
 import { json, redirect } from "@remix-run/node";
 // import { getRequiredParam, notFound } from "../../utils/http.server";
 import CardList from "~/routes/components/CardList";
@@ -24,7 +25,7 @@ export async function loader({ request, params }) {
       status: 404,
     });
   }
-  return json({ projects, param });
+  return json({ projects, param, storageUrl: env.STORAGE_URL });
 }
 
 export default function Projects() {

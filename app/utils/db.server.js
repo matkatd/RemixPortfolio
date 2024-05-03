@@ -5,6 +5,9 @@ export async function getProjects(category) {
     where: {
       category: category,
     },
+    orderBy: {
+      date: "desc",
+    },
   });
 }
 
@@ -43,9 +46,6 @@ export async function createProject(project) {
         writeup: writeup,
       },
     });
-    if (data === {}) {
-      throw new Error("Empty object after creating with prisma");
-    }
   } catch (e) {
     console.log("Exception while creating with prisma: " + e);
   }

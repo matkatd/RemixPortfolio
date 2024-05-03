@@ -102,6 +102,16 @@ main {
 
 .delete {
   background-color: rgb(187, 26, 12);
+  height: auto;
+
+  p {
+    margin: 0;
+  }
+}
+
+:hover.delete {
+  transition: all 0.2s ease;
+  background-color: rgb(110, 13, 4);
 }
 
 .category-dropdown {
